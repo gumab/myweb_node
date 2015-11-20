@@ -23,33 +23,22 @@
     if (typeof myWeb.directives === 'undefined') {
       myWeb.directives = {};
     }
-
   </script>
 </head>
 <script src="/bower_components/angular/angular.min.js"></script>
 <script src="/bower_components/angular-route/angular-route.min.js"></script>
 <script src="/bower_components/angular-cookies/angular-cookies.min.js"></script>
 <script src="../lib/data/domain.js"></script>
-<script src="./services/testService.js"></script>
+<script src="./services/loginService.js"></script>
 <script src="./index.js"></script>
 <body>
-<div data-ng-app="page1App" class="container" style="padding: 20px; text-align: center;"
-     data-ng-controller="Page1Ctrl as page1Ctrl">
-  <h1>Page 1</h1>
-  <input class="form-control" data-ng-model="testparam">
-  <input class="form-control" data-ng-disabled="testparam" data-ng-model="testparam">
+<div data-ng-app="loginApp" class="container" style="padding: 20px; text-align: center;"
+     data-ng-controller="LoginCtrl as loginCtrl">
+  <h1>Login</h1>
+  <input style="border-bottom-left-radius: 0;border-bottom-right-radius: 0;" class="form-control" type="text" data-ng-model="email" placeholder="e-mail">
+  <input style="border-top-left-radius: 0;border-top-right-radius: 0;"  class="form-control" type="password" data-ng-model="passwd" placeholder="Password">
 
-  <button style="margin-top:20px" class="btn btn-primary" data-ng-click="page1Ctrl.test()">TEST</button>
-
-  <div style="margin-top:40px">
-    <span>{{testparam2}}</span>
-  </div>
+  <button style="margin-top:20px" class="btn btn-primary" data-ng-click="loginCtrl.login()">TEST</button>
 </div>
 </body>
-<script>
-  var app = angular.module('page1App')
-    .config(function (testServiceProvider) {
-      testServiceProvider.setInitValue('initValue');
-    });
-</script>
 </html>

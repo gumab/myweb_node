@@ -33,13 +33,13 @@
 <script src="./services/testService.js"></script>
 <script src="./index.js"></script>
 <body>
-<div data-ng-app="page1App" class="container" style="padding: 20px; text-align: center;"
-     data-ng-controller="Page1Ctrl as page1Ctrl">
-  <h1>Page 1</h1>
+<div data-ng-app="page2App" class="container" style="padding: 20px; text-align: center;"
+     data-ng-controller="Page2Ctrl as page2Ctrl">
+  <h1>Page 2</h1>
   <input class="form-control" data-ng-model="testparam">
   <input class="form-control" data-ng-disabled="testparam" data-ng-model="testparam">
 
-  <button style="margin-top:20px" class="btn btn-primary" data-ng-click="page1Ctrl.test()">TEST</button>
+  <button style="margin-top:20px" class="btn btn-primary" data-ng-click="page2Ctrl.test()">TEST</button>
 
   <div style="margin-top:40px">
     <span>{{testparam2}}</span>
@@ -47,7 +47,7 @@
 </div>
 </body>
 <script>
-  var app = angular.module('page1App')
+  var app = angular.module('page2App')
     .config(function (testServiceProvider) {
       testServiceProvider.setInitValue('initValue');
     });
