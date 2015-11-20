@@ -1,0 +1,18 @@
+{
+  "node": true, // node.js 여부
+  "bitwise": true, // bit 연산자 금지
+  "camelcase": true, // CamelCase와 PascalCase만 허용
+  "curly": true, // 중괄호 생략 금지
+  "eqeqeq": true, // 비교 연산자는 === 와 !==만 허용
+  "forin": true, // for-in 루프에서 반드시 hasOwnProperty로 확인해야 함
+  "indent": 2, // 들여쓰기 === 공백 2칸
+  "loopfunc": true, // 루프 안에서 함수 선언 허용
+  "maxlen": 120, // 한 줄의 최대 길이
+  "noarg": true, // argments.caller, arguments.callee 사용 금지
+  "quotmark": "single", // 홑따옴표만 허용
+  "strict": true, // strict mode
+  "undef": true, // 선언되지 않은 변수 사용 금지
+  "globals": {
+    "escrow": true
+  }
+}

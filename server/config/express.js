@@ -10,12 +10,8 @@ var express = require('express'),
 module.exports = function (app) {
   var env = process.env.NODE_ENV;
 
-  // local configuration
-  if ('local' === env) {
-    app.use(require('connect-livereload')());
-  }
-
   // Common configuration
+  //app.disable('x-powered-by');
   app.use(express.static(path.join(config.root, 'client')));
   app.set('views', path.join(config.root, 'client'));
 

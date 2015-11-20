@@ -1,0 +1,1 @@
+if (typeof my_web === 'undefined') { my_web = {}; }if (typeof my_web.domain === 'undefined') { my_web.domain = {}; }my_web.domain.home = 'http://gumabae.iptime.org';
