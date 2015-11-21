@@ -1,9 +1,9 @@
 'use strict';
 
 // config/database.js
-var host = 'gumabae.iptime.org';
-if (process.env.NODE_ENV !== 'production') {
-  host = '127.0.0.1';
+var host = '127.0.0.1';
+if (process.env.MYWEB_ENV !== 'production') {
+  host = 'gumabae.iptime.org';
 }
 
 module.exports = {
