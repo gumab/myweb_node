@@ -3,7 +3,7 @@
 // config/database.js
 var host = '127.0.0.1';
 if (process.env.MYWEB_ENV !== 'production') {
-  host = 'gumabae.iptime.org';
+  host = '192.168.112.68';
 }
 
 module.exports = {

@@ -25,7 +25,7 @@ module.exports = function (app) {
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(cookieParser());
 
-  //require('./passport')(passport);
+  require('./passport')(passport);
 
   app.use(session({ secret: 'ilovescotchscotchyscotchscotch' })); // session secret
   app.use(passport.initialize());
