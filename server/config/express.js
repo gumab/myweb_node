@@ -4,7 +4,10 @@ var express = require('express'),
   bodyParser = require('body-parser'),
   cookieParser = require('cookie-parser'),
   path = require('path'),
-  config = require('./config');
+  config = require('./config'),
+  session= require('express-session'),
+  passport = require('passport'),
+  flash = require('connect-flash');
 
 // Express configuration
 module.exports = function (app) {
@@ -21,4 +24,11 @@ module.exports = function (app) {
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(cookieParser());
+
+  //require('./passport')(passport);
+
+  app.use(session({ secret: 'ilovescotchscotchyscotchscotch' })); // session secret
+  app.use(passport.initialize());
+  app.use(passport.session()); // persistent login sessions
+  app.use(flash());
 };

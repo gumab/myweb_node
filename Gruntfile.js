@@ -248,7 +248,7 @@ module.exports = function (grunt) {
             '<%=myweb.app%>/client/**/*.js',
             '!<%=myweb.app%>/client/*/data/templates-*.js'
           ],
-          tasks: ['newer:jshint:client']
+          tasks: ['jshint:client']
         },
         express: {
           files: [
@@ -256,7 +256,7 @@ module.exports = function (grunt) {
             'server/config/**/*.js',
             'server/routes/**/*.js'
           ],
-          tasks: ['newer:jshint:server', 'express:dev', 'wait'],
+          tasks: ['jshint:server', 'express:dev', 'wait'],
           options: {
             spawn: false
           }

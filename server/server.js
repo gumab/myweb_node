@@ -6,9 +6,10 @@ var express = require('express');
 var app = express();
 
 
+//require('./config/passport')(app);
+
 // set express config
 require('./config/express')(app);
-
 
 // use routing rules
 require('./routes')(app);
