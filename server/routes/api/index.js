@@ -16,7 +16,7 @@ router.get('/select', function (req, res, next) {
   var mail = req.query.mail;
   userService.selectUser(mail, function (err, data) {
     if (!err) {
-      res.send(data.toString());
+      res.send(JSON.stringify(data));
     } else {
       res.send(err.toString());
     }
