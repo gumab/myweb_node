@@ -6,15 +6,12 @@ var router = require('express').Router();
 
 // render page
 router.get('/', function (req, res, next) {
-  if(req.isAuthenticated()) {
-    res.render('page2/index.html', {
-      data: {
-        root: config.root
-      }
-    });
-  }else{
-    res.redirect('/ko/page2');
-  }
+  var url = req.query.url || '';
+  res.render('views/ko/partials/login.html', {
+    title: 'Login',
+    layout: 'views/ko/index.html',
+    data: { user: req.user, returnUrl: url }
+  });
 });
 
 module.exports = router;

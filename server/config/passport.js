@@ -15,15 +15,11 @@ module.exports = function (passport) {
 
   // used to serialize the user for the session
   passport.serializeUser(function (user, done) {
-    console.log('serializeUser');
-    console.log(user);
     done(null, user.id);
   });
 
   // used to deserialize the user
   passport.deserializeUser(function (seq, done) {
-    console.log('deserializeUser');
-    console.log(seq);
     userService.selectUserBySeq(seq, function (err, user) {
       done(err, user);
     });
@@ -52,14 +48,11 @@ module.exports = function (passport) {
 
         // find a user whose email is the same as the forms email
         // we are checking to see if the user trying to login already exists
-        console.log(email);
         userService.selectUser(email, function (err, user) {
           // if there are any errors, return the error
           if (err) {
-            console.log(err);
             return callback(err);
           }
-          console.log(user);
 
           // check to see if theres already a user with that email
           if (user) {
@@ -74,7 +67,6 @@ module.exports = function (passport) {
             newUser.local.email = email;
             newUser.local.password = newUser.generateHash(password);
 
-            console.log(newUser);
             userService.insertUser(newUser.local, function (err, data) {
               if (err) {
                 return callback(err);
@@ -103,16 +95,11 @@ module.exports = function (passport) {
           return done(err);
         }
 
-        console.log('hihihi');
-        console.log(user);
-
         // if no user is found, return the message
         if (!user) {
           return done(null, false, req.flash('loginMessage', 'No user found.'));
            // req.flash is the way to set flashdata using connect-flash
         }
-
-        console.log(user);
 
         // if the user is found but the password is wrong
         if (!user.validPassword(password)) {

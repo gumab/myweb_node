@@ -14,6 +14,8 @@ require('./config/express')(app);
 // use routing rules
 require('./routes')(app);
 
+require('./lib/middlewares/error-handler')(app);
+
 
 // start listening
 app.listen(config.webServer.port, config.webServer.ip, function () {

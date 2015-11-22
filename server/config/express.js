@@ -7,7 +7,8 @@ var express = require('express'),
   config = require('./config'),
   session= require('express-session'),
   passport = require('passport'),
-  flash = require('connect-flash');
+  flash = require('connect-flash'),
+  expressLayouts = require('express-ejs-layouts');
 
 // Express configuration
 module.exports = function (app) {
@@ -20,6 +21,9 @@ module.exports = function (app) {
 
   app.engine('html', require('ejs').renderFile);
   app.set('view engine', 'html');
+  app.set('layout','myLayout');
+
+  app.use(expressLayouts);
 
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-language" content="ko">
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+  <meta http-equiv="Pragma" content="no-cache"/>
+  <meta http-equiv="Expires" content="0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>
+
+    Yurisoft
+
+  </title>
+
+  <link href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic" rel="stylesheet">
+  <link href="/assets/css/toolkit-inverse.css" rel="stylesheet">
+  <link href="/assets/css/application.css" rel="stylesheet">
+
+  <style>
+    /* note: this is a hack for ios iframe for bootstrap themes shopify page */
+    /* this chunk of css is not part of the toolkit :) */
+    body {
+      width: 1px;
+      min-width: 100%;
+      *width: 100%;
+    }
+  </style>
+</head>
+<body>
+<div class="bw">
+  <div class="fu">
+    <div class="ge aom">
+      <nav class="aot">
+        <div class="aon">
+          <button class="amy amz aoo" type="button" data-toggle="collapse" data-target="#nav-toggleable-sm">
+            <span class="ct">Toggle nav</span>
+          </button>
+          <a class="aop cn" href="index.html">
+            <span class="bv act aoq"></span>
+          </a>
+        </div>
+
+        <div class="collapse and" id="nav-toggleable-sm">
+          <form class="aor">
+            <input class="form-control" type="text" placeholder="Search...">
+            <button type="submit" class="fm">
+              <span class="bv adn"></span>
+            </button>
+          </form>
+          <ul class="nav of nav-stacked">
+            <li class="tq">MainMenu</li>
+            <li class="<%-page===1?'active':''%>"><a href="#">Home</a></li>
+            <li class="<%-page===2?'active':''%>"><a href="/ko/page1">Page1</a></li>
+            <li class="<%-page===3?'active':''%>"><a href="/ko/page2">Page2</a></li>
+            <li class="tq">My Menu</li>
+            <li class="<%-page===4?'active':''%>">
+              <% if(!data.user){ %>
+              <a href="/ko/login"> Login </a>
+              <%} else{%>
+              <a href="/ko/logout"> Logout </a>
+              <%}%>
+            </li>
+          </ul>
+          <hr class="rw aky">
+        </div>
+      </nav>
+    </div>
+    <div class="hc aps">
+      <div class="apa">
+        <div class="apb">
+          <h6 class="apd">yurisoft</h6>
+
+          <h2 class="apc"><%-title%></h2>
+        </div>
+      </div>
+
+      <hr class="aky">
+
+      <div id="mainContainer" class="fu db">
+        <%-body%>
+      </div>
+
+      <div class="anv alg ala">
+        <h3 class="anw anx">About</h3>
+      </div>
+
+      <div class="apd" style="text-align:center">
+        <p>yurisoft</p>
+
+        <p>since 2014</p>
+
+        <p>Tel. 010-4904-5954</p>
+      </div>
+
+      <hr class="aky">
+
+    </div>
+  </div>
+</div>
+
+<div id="docsModal" class="cb fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="ri">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
+        </button>
+        <h4 class="modal-title" id="myModalLabel">Example modal</h4>
+      </div>
+      <div class="modal-body">
+        <p>You're looking at an example modal in the dashboard theme.</p>
+      </div>
+      <div class="rj">
+        <button type="button" class="ce fh" data-dismiss="modal">Cool, got it!</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="/scripts/lib/data/common.js"></script>
+<script src="/scripts/lib/data/domain.js"></script>
+<script src="/bower_components/angular/angular.min.js"></script>
+<script src="/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="/assets/js/chart.js"></script>
+<script src="/assets/js/toolkit.js"></script>
+<script>
+  myWeb.data = JSON.parse(JSON.stringify('<%-JSON.stringify(data)%>'));
+</script>
+<%-script%>
+
+</body>
+</html>

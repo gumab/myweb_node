@@ -1,0 +1,17 @@
+<div data-ng-app="loginApp"
+     data-ng-controller="LoginCtrl as loginCtrl">
+  <form name="loginForm">
+    <input align="center" name="email" class="form-control form-input-top" type="text" data-ng-model="email"
+           placeholder="e-mail">
+    <input name="password" class="form-control form-input-bottom" type="password" data-ng-model="passwd"
+           placeholder="Password">
+  </form>
+
+  <button style="margin:20px 0" class="ce apn ame" data-ng-click="loginCtrl.login()">Login</button>
+  <div>
+    <span style="font-size: x-small">계정이 없으신가요? </span><a href="/ko/signup" style="cursor: pointer;">register</a>
+  </div>
+</div>
+<%-contentFor('script')%>
+<script src="/scripts/services/memberService.js"></script>
+<script src="/scripts/controllers/login.js"></script>

@@ -96,7 +96,8 @@ module.exports = function (grunt) {
           src: [
             'client/**/*.js',
             '!client/bower_components/**/*.js',
-            '!client/**/lib/**/*.js'
+            '!client/**/lib/**/*.js',
+            '!client/assets/**/*'
           ]
         },
         server: {

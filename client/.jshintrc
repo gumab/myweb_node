@@ -1,17 +1,17 @@
 {
-  "browser": true, // browser ¿©ºÎ
-  "bitwise": true, // bit ¿¬»êÀÚ ±İÁö
-  "camelcase": true, // CamelCase¿Í PascalCase¸¸ Çã¿ë
-  "curly": true, // Áß°ıÈ£ »ı·« ±İÁö
-  "eqeqeq": true, // ºñ±³ ¿¬»êÀÚ´Â === ¿Í !==¸¸ Çã¿ë
-  "forin": true, // for-in ·çÇÁ¿¡¼­ ¹İµå½Ã hasOwnProperty·Î È®ÀÎÇØ¾ß ÇÔ
-  "indent": 2, // µé¿©¾²±â === °ø¹é 2Ä­
-  "loopfunc": true, // ·çÇÁ ¾È¿¡¼­ ÇÔ¼ö ¼±¾ğ Çã¿ë
-  "maxlen": 120, // ÇÑ ÁÙÀÇ ÃÖ´ë ±æÀÌ
-  "noarg": true, // argments.caller, arguments.callee »ç¿ë ±İÁö
-  "quotmark": "single", // È¬µû¿ÈÇ¥¸¸ Çã¿ë
+  "browser": true, // browser ì—¬ë¶€
+  "bitwise": true, // bit ì—°ì‚°ì ê¸ˆì§€
+  "camelcase": true, // CamelCaseì™€ PascalCaseë§Œ í—ˆìš©
+  "curly": true, // ì¤‘ê´„í˜¸ ìƒëµ ê¸ˆì§€
+  "eqeqeq": true, // ë¹„êµ ì—°ì‚°ìëŠ” === ì™€ !==ë§Œ í—ˆìš©
+  "forin": true, // for-in ë£¨í”„ì—ì„œ ë°˜ë“œì‹œ hasOwnPropertyë¡œ í™•ì¸í•´ì•¼ í•¨
+  "indent": 2, // ë“¤ì—¬ì“°ê¸° === ê³µë°± 2ì¹¸
+  "loopfunc": true, // ë£¨í”„ ì•ˆì—ì„œ í•¨ìˆ˜ ì„ ì–¸ í—ˆìš©
+  "maxlen": 120, // í•œ ì¤„ì˜ ìµœëŒ€ ê¸¸ì´
+  "noarg": true, // argments.caller, arguments.callee ì‚¬ìš© ê¸ˆì§€
+  "quotmark": "single", // í™‘ë”°ì˜´í‘œë§Œ í—ˆìš©
   "strict": true, // strict mode
-  "undef": true, // ¼±¾ğµÇÁö ¾ÊÀº º¯¼ö »ç¿ë ±İÁö
+  "undef": true, // ì„ ì–¸ë˜ì§€ ì•Šì€ ë³€ìˆ˜ ì‚¬ìš© ê¸ˆì§€
   "validthis": true,
   "globals": {
     "_": true

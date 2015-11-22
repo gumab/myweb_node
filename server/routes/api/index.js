@@ -4,6 +4,8 @@ var config = require('../../config/config');
 var router = require('express').Router();
 var userService = require('../../services/userServices');
 var passport = require('passport');
+var requestHelper = require('../request-helper')();
+var MyWebError = require('../../lib/middlewares/error-handler').MyWebError;
 
 
 // render page
@@ -31,11 +33,6 @@ router.get('/isauth', function (req, res, next) {
   }
 });
 
-router.get('/logout', function (req, res, next) {
-  req.logout();
-  res.redirect('/api/isauth');
-});
-
 // process the signup form
 router.post('/signup', passport.authenticate('local-signup', {
   successRedirect: '/ko/page1', // redirect to the secure profile section
@@ -43,12 +40,47 @@ router.post('/signup', passport.authenticate('local-signup', {
   failureFlash: true // allow flash messages
 }));
 
-// process the login form
-router.post('/login', passport.authenticate('local-login', {
-  successRedirect: '/ko/page1', // redirect to the secure profile section
-  failureRedirect: '/ko/page2', // redirect back to the signup page if there is an error
-  failureFlash: true // allow flash messages
-}));
+//// process the login form
+//router.post('/login', passport.authenticate('local-login',
+//  function (req, res) {
+//    // If this function gets called, authentication was successful.
+//    // `req.user` contains the authenticated user.
+//    res.redirect('/users/' + req.user.username);
+//  }));
+
+router.get('/profile', function (req, res, next) {
+  res.send(JSON.stringify(req.user));
+});
+
+router.post('/login', function (req, res, next) {
+  var R = requestHelper(req);
+  var email = req.body.email;
+  var pwd = req.body.password;
+
+  userService.selectUser(email, function (err, user) {
+    if (err) {
+      next(err);
+    } else {
+      if (!user) {
+        next(new MyWebError('no user', '', '101'));
+      } else {
+        if (user.validPassword(pwd)) {
+          req.login(user, function (err) {
+            if (err) {
+              next(err);
+            } else {
+              console.log(res.json);
+              console.log(R.getJSONResponse);
+              res.json(R.getJSONResponse('000','', 'success'));
+            }
+          });
+        } else {
+          next(new MyWebError('wrong passwd', '', '102'));
+        }
+      }
+    }
+  });
+});
 
 
 module.exports = router;

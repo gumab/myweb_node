@@ -4,10 +4,14 @@ var configDB = require('../config/database'),
   mysql = require('mysql'),
   connection = mysql.createConnection(configDB.mysql),
   User = require('../models/user');
+var MyWebError = require('../lib/middlewares/error-handler').MyWebError;
 
 module.exports = {
 
   insertUser: function (user, callback) {
+    if (!validateUser(user)) {
+      return callback(new MyWebError('user validation failed', '', '201'));
+    }
     var newUser = {
       'user_mail': user.email || '',
       'user_name': user.name || '',
@@ -36,11 +40,9 @@ module.exports = {
       }
       //console.log(query);
       else {
-        console.log(result);
         if (result && result.length > 0) {
           result = result[0];
           var user = new User(result.seq, result.user_mail, result.user_name, result.user_pwd);
-          console.log(user);
           callback(null, user);
         } else {
           callback(null, null);
@@ -69,6 +71,16 @@ module.exports = {
       }
     });
   }
-
-
 };
+
+function validateUser(user) {
+  var result = false;
+  if (user) {
+    if (user.email && user.email.length >= 3) {
+      if (user.password && user.password.length >= 3) {
+        result = true;
+      }
+    }
+  }
+  return result;
+}
