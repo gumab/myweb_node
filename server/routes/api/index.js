@@ -34,11 +34,33 @@ router.get('/isauth', function (req, res, next) {
 });
 
 // process the signup form
-router.post('/signup', passport.authenticate('local-signup', {
-  successRedirect: '/ko/page1', // redirect to the secure profile section
-  failureRedirect: '/ko/page2', // redirect back to the signup page if there is an error
-  failureFlash: true // allow flash messages
-}));
+router.post('/signup', function (req, res, next) {
+  var R = requestHelper(req);
+  var email = req.body.email;
+  var pwd = req.body.password;
+  var newUser = {
+    email: email,
+    password: pwd
+  };
+
+  userService.selectUser(email, function (err, user) {
+    if (err) {
+      next(err);
+    } else {
+      if (user) {
+        next(new MyWebError('이미 가입한 사용자입니다.', '', '103'));
+      } else {
+        userService.insertUser(newUser, function (err, data) {
+          if (err) {
+            next(err);
+          } else {
+            res.json(R.getJSONResponse('000', '', 'success'));
+          }
+        });
+      }
+    }
+  });
+});
 
 //// process the login form
 //router.post('/login', passport.authenticate('local-login',
@@ -71,7 +93,7 @@ router.post('/login', function (req, res, next) {
             } else {
               console.log(res.json);
               console.log(R.getJSONResponse);
-              res.json(R.getJSONResponse('000','', 'success'));
+              res.json(R.getJSONResponse('000', '', 'success'));
             }
           });
         } else {

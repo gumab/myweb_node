@@ -11,12 +11,11 @@
   </div>
 </div>
 <%-contentFor('script')%>
+<script src="/scripts/services/testService.js"></script>
+<script src="/scripts/controllers/page2.js"></script>
 <script>
   var app = angular.module('page2App')
     .config(function (testServiceProvider) {
       testServiceProvider.setInitValue('initValue');
     });
 </script>
-
-<script src="/scripts/services/testService.js"></script>
-<script src="/scripts/controllers/page2.js"></script>

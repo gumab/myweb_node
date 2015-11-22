@@ -12,10 +12,11 @@ module.exports = {
     if (!validateUser(user)) {
       return callback(new MyWebError('user validation failed', '', '201'));
     }
+
     var newUser = {
       'user_mail': user.email || '',
       'user_name': user.name || '',
-      'user_pwd': user.password || ''
+      'user_pwd': new User().generateHash(user.password) || ''
     };
     var query = connection.query('insert into users set ?', newUser, function (err, result) {
       if (err) {
