@@ -21,7 +21,7 @@ module.exports = function (app) {
 
   app.engine('html', require('ejs').renderFile);
   app.set('view engine', 'html');
-  app.set('layout','myLayout');
+  app.set('layout','views/ko/layouts/blank.html');
 
   app.use(expressLayouts);
 
