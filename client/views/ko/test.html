@@ -1,50 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>YuriSoft</title>
-  <!-- Tell the browser to be responsive to screen width -->
-  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <!-- Bootstrap 3.3.5 -->
-  <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="/assets/css/font-awesome.min.css">
-  <!-- Ionicons -->
-  <link rel="stylesheet" href="/assets/css/ionicons.min.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="/assets/css/AdminLTE.min.css">
-  <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
-        page. However, you can choose any other skin. Make sure you
-        apply the skin class to the body tag so the changes take effect.
-  -->
-  <link rel="stylesheet" href="/assets/css/skins/skin-red.min.css">
-
-  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-  <!--[if lt IE 9]>
-  <![endif]-->
-</head>
-<!--
-BODY TAG OPTIONS:
-=================
-Apply one or more of the following classes to get the
-desired effect
-|---------------------------------------------------------|
-| SKINS         | skin-blue                               |
-|               | skin-black                              |
-|               | skin-purple                             |
-|               | skin-yellow                             |
-|               | skin-red                                |
-|               | skin-green                              |
-|---------------------------------------------------------|
-|LAYOUT OPTIONS | fixed                                   |
-|               | layout-boxed                            |
-|               | layout-top-nav                          |
-|               | sidebar-collapse                        |
-|               | sidebar-mini                            |
-|---------------------------------------------------------|
--->
+<link rel="stylesheet" href="/assets/css/skins/skin-red.min.css">
 <body class="skin-red sidebar-mini">
 <div class="wrapper">
 
@@ -283,14 +237,12 @@ desired effect
   <div class="control-sidebar-bg" style="position: fixed; height: auto;"></div>
 </div>
 <!-- ./wrapper -->
+</body>
 
 <!-- REQUIRED JS SCRIPTS -->
 
-<!-- jQuery 2.1.4 -->
-<script src="/bower_components/jquery/dist/jquery.min.js"></script>
-<!-- Bootstrap 3.3.5 -->
-<script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <!-- AdminLTE App -->
+<%-contentFor('script')%>
 <script src="/assets/js/AdminLTE.min.js"></script>
 
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
@@ -298,6 +250,3 @@ desired effect
      user experience. Slimscroll is required when using the
      fixed layout. -->
 
-
-</body>
-</html>
