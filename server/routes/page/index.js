@@ -7,6 +7,7 @@ router.get('/', function (req, res, next) {
   if (req.isAuthenticated()) {
     res.render('views/ko/test.html', {
       page: 2,
+      title: '',
       data: {user: req.user}
     });
   } else {
