@@ -10,6 +10,7 @@ var app = express();
 
 // set express config
 require('./config/express')(app);
+require('./lib/middlewares/cookie-parser')(app);
 
 // use routing rules
 require('./routes')(app);

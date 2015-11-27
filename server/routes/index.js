@@ -7,4 +7,5 @@ module.exports = function (app) {
   app.use('/ko', require('./page'));
 
   app.use('/ko/api', require('./api'));
+  app.use('/ko/api/auth', require('./api/authed'));
 };

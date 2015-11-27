@@ -23,16 +23,17 @@
     var $window = self.window_;
     var memberService = self.memberService_;
 
+    var name = $scope.name;
     var email = $scope.email;
     var pwd = $scope.passwd;
     var cPwd = $scope.confirmPasswd;
 
-    if (signUpValidation($window, email, pwd, cPwd)) {
-      memberService.signUp(email, pwd, function (response) {
+    if (signUpValidation($window, name, email, pwd, cPwd)) {
+      memberService.signUp(name, email, pwd, function (response) {
         $window.console.log(response);
         if (response.result === '000') {
           $window.location.href = myWeb.data.returnUrl || '/ko/login';
-        } else{
+        } else {
           $window.alert(response.message);
         }
       });
@@ -40,19 +41,19 @@
   };
 
 
-  function signUpValidation($window, mail, pwd, cPwd) {
+  function signUpValidation($window, name, mail, pwd, cPwd) {
     var result = false;
-    if (!mail || mail.length < 3) {
+    if (!name || name.length < 3) {
+      $window.alert('이름 입력!');
+    } else if (!mail || mail.length < 3) {
       $window.alert('이메일 입력!!');
-    }
-    else if (!pwd) {
+    } else if (!pwd) {
       $window.alert('비밀번호를 입력하세요');
-    }else if(pwd!==cPwd){
+    } else if (pwd !== cPwd) {
       $window.alert('비밀번호가 일치하지 않습니다');
-    }else if (pwd.length < 3) {
+    } else if (pwd.length < 3) {
       $window.alert('3자 이상의 비밀번호를 입력하세요');
-    }
-    else {
+    } else {
       result = true;
     }
     return result;

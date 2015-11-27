@@ -20,7 +20,8 @@ module.exports = function (passport) {
 
   // used to deserialize the user
   passport.deserializeUser(function (seq, done) {
-    userService.selectUserBySeq(seq, function (err, user) {
+    var user = new User(seq);
+    userService.getUser(user, function (err, user) {
       done(err, user);
     });
   });
@@ -46,9 +47,18 @@ module.exports = function (passport) {
       // User.findOne wont fire unless data is sent back
       process.nextTick(function () {
 
+
+        // if there is no user with that email
+        // create the user
+        var newUser = new User();
+
+        // set the user's local credentials
+        newUser.local.email = email;
+        newUser.local.password = password;
+
         // find a user whose email is the same as the forms email
         // we are checking to see if the user trying to login already exists
-        userService.selectUser(email, function (err, user) {
+        userService.getUser(newUser, function (err, user) {
           // if there are any errors, return the error
           if (err) {
             return callback(err);
@@ -58,16 +68,7 @@ module.exports = function (passport) {
           if (user) {
             return callback(null, false, req.flash('signupMessage', 'That email is already taken.'));
           } else {
-
-            // if there is no user with that email
-            // create the user
-            var newUser = new User();
-
-            // set the user's local credentials
-            newUser.local.email = email;
-            newUser.local.password = password;
-
-            userService.insertUser(newUser.local, function (err, data) {
+            userService.signUp(newUser, function (err, data) {
               if (err) {
                 return callback(err);
               } else {

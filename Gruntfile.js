@@ -255,7 +255,8 @@ module.exports = function (grunt) {
           files: [
             'server/server.js',
             'server/config/**/*.js',
-            'server/routes/**/*.js'
+            'server/routes/**/*.js',
+            'server/**/*.js'
           ],
           tasks: ['jshint:server', 'express:dev', 'wait'],
           options: {

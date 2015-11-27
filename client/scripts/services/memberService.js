@@ -7,7 +7,7 @@
     self.q_ = $q;
   }
 
-  MemberService.prototype.login = function (mail, pwd,callback) {
+  MemberService.prototype.login = function (mail, pwd, callback) {
     var self = this;
     var $http = self.http_;
     var $q = self.q_;
@@ -26,7 +26,7 @@
     });
   };
 
-  MemberService.prototype.signUp = function(mail, pwd, callback){
+  MemberService.prototype.signUp = function (name, mail, pwd, callback) {
     var self = this;
     var $http = self.http_;
     var $q = self.q_;
@@ -35,6 +35,7 @@
       method: 'POST',
       url: '/ko/api/signup',
       data: {
+        'name': name,
         'email': mail,
         'password': pwd
       }
