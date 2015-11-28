@@ -45,7 +45,7 @@ function MyWebError(message, domain, code, value) {
   this.code = code || '-1';
   this.value = value || '';
   this.msg = message || ''; // message랑 뭐가 다르지 ?
-  this.url = '/ko/error';
+  this.url = '/admin/error';
 }
 util.inherits(MyWebError, Error);
 errorHandler.MyWebError = MyWebError;

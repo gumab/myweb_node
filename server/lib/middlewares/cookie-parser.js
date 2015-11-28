@@ -24,7 +24,7 @@ module.exports = function (app) {
         if (isAjax) {
           return res.send('error!! you need to login');
         } else {
-          return res.redirect('/ko/login?url=' + targetUrl || '');
+          return res.redirect('/admin/login?url=' + targetUrl || '');
         }
       }
     }

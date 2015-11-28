@@ -1,0 +1,55 @@
+<body class="hold-transition register-page">
+<div class="register-box">
+  <div class="register-logo">
+    <a href="/admin"><b>Yuri</b>Soft</a>
+  </div>
+
+  <div class="register-box-body" data-ng-app="signUpApp" data-ng-controller="SignUpCtrl as signUpCtrl">
+    <p class="login-box-msg">Register a new membership</p>
+
+    <form>
+      <div class="form-group has-feedback">
+        <input type="text" class="form-control" placeholder="Full name" data-ng-model="name">
+        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+      </div>
+      <div class="form-group has-feedback">
+        <input type="text" class="form-control" placeholder="Email" data-ng-model="email">
+        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+      </div>
+      <div class="form-group has-feedback">
+        <input type="password" class="form-control" placeholder="Password" data-ng-model="passwd">
+        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+      </div>
+      <div class="form-group has-feedback">
+        <input type="password" class="form-control" placeholder="Retype password" data-ng-model="confirmPasswd">
+        <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
+      </div>
+    </form>
+    <div class="row">
+      <div class="col-xs-8">
+      </div>
+      <!-- /.col -->
+      <div class="col-xs-4">
+        <button class="btn btn-primary btn-block btn-flat" data-ng-click="signUpCtrl.signUp()">Register</button>
+      </div>
+      <!-- /.col -->
+    </div>
+
+    <div class="social-auth-links text-center">
+      <p>- OR -</p>
+      <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign up using
+        Facebook</a>
+      <a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Sign up using
+        Google+</a>
+    </div>
+
+    <a href="/admin/login" class="text-center">I already have a membership</a>
+  </div>
+  <!-- /.form-box -->
+</div>
+<!-- /.register-box -->
+</body>
+<%-contentFor('script')%>
+<script src="/scripts/services/memberService.js"></script>
+<script src="/scripts/controllers/signup.js"></script>
+

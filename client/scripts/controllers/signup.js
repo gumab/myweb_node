@@ -32,7 +32,7 @@
       memberService.signUp(name, email, pwd, function (response) {
         $window.console.log(response);
         if (response.result === '000') {
-          $window.location.href = myWeb.data.returnUrl || '/ko/login';
+          $window.location.href = myWeb.data.returnUrl || '/admin/login';
         } else {
           $window.alert(response.message);
         }

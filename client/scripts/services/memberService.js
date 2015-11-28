@@ -14,7 +14,7 @@
 
     return $http({
       method: 'POST',
-      url: '/ko/api/login',
+      url: '/admin/api/login',
       data: {
         'email': mail,
         'password': pwd
