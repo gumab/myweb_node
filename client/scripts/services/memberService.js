@@ -33,11 +33,27 @@
 
     return $http({
       method: 'POST',
-      url: '/ko/api/signup',
+      url: '/admin/api/signup',
       data: {
         'name': name,
         'email': mail,
         'password': pwd
+      }
+    }).then(function (response) {
+      callback(response.data);
+    }, function (rejection) {
+      callback(rejection.data);
+    });
+  };
+
+  MemberService.prototype.emailDupCheck = function (mail, callback) {
+    var self = this;
+    var $http = self.http_;
+    return $http({
+      method: 'POST',
+      url: '/admin/api/emailDupCheck',
+      data: {
+        'email': mail
       }
     }).then(function (response) {
       callback(response.data);

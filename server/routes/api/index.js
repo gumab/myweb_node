@@ -61,5 +61,32 @@ router.post('/login', function (req, res, next) {
   });
 });
 
+router.post('/emailDupCheck', function (req, res, next) {
+  var R = requestHelper(req);
+  var email = req.body.email;
+
+  var result = {
+    email: email,
+    isDuplicated: true
+  };
+  var user = {
+    local: {
+      email: email
+    }
+  };
+
+  userService.getUser(user, function (err, data) {
+    if (err && err.code !== '101') {
+      next(err);
+    } else {
+      if (err) {
+        result.isDuplicated = false;
+      } else {
+        result.isDuplicated = true;
+      }
+      res.json(R.getJSONResponse('000', '', result));
+    }
+  });
+});
 
 module.exports = router;

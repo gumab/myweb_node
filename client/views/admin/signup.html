@@ -7,21 +7,35 @@
   <div class="register-box-body" data-ng-app="signUpApp" data-ng-controller="SignUpCtrl as signUpCtrl">
     <p class="login-box-msg">Register a new membership</p>
 
-    <form>
-      <div class="form-group has-feedback">
-        <input type="text" class="form-control" placeholder="Full name" data-ng-model="name">
+    <form data-ng-keyup="signUpCtrl.updateFormStatus()">
+      <div class="form-group has-feedback ng-class:FormStatus.name.class1">
+        <label data-ng-if="name" class="control-label" for="inputEmail">
+          <i class="fa ng-class:FormStatus.name.class2"></i> {{FormStatus.name.message}}
+        </label>
+        <input id="inputName" type="text" class="form-control" placeholder="Full name" data-ng-model="name">
         <span class="glyphicon glyphicon-user form-control-feedback"></span>
       </div>
-      <div class="form-group has-feedback">
-        <input type="text" class="form-control" placeholder="Email" data-ng-model="email">
+      <div class="form-group has-feedback ng-class:FormStatus.email.class1">
+        <label data-ng-if="email" class="control-label" for="inputEmail">
+          <i class="fa ng-class:FormStatus.email.class2"></i> {{FormStatus.email.message}}
+        </label>
+        <input id="inputEmail" type="text" class="form-control" placeholder="Email" data-ng-model="email"
+          data-ng-blur="signUpCtrl.emailCheck()">
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
       </div>
-      <div class="form-group has-feedback">
-        <input type="password" class="form-control" placeholder="Password" data-ng-model="passwd">
+      <div class="form-group has-feedback ng-class:FormStatus.passwd.class1">
+        <label data-ng-if="passwd" class="control-label" for="inputPwd">
+          <i class="fa ng-class:FormStatus.passwd.class2"></i> {{FormStatus.passwd.message}}
+        </label>
+        <input id="inputPwd" type="password" class="form-control" placeholder="Password" data-ng-model="passwd">
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
-      <div class="form-group has-feedback">
-        <input type="password" class="form-control" placeholder="Retype password" data-ng-model="confirmPasswd">
+      <div class="form-group has-feedback ng-class:FormStatus.cpasswd.class1">
+        <label data-ng-if="confirmPasswd" class="control-label" for="inputCPwd">
+          <i class="fa ng-class:FormStatus.cpasswd.class2"></i> {{FormStatus.cpasswd.message}}
+        </label>
+        <input id=inputCPwd type="password" class="form-control" placeholder="Retype password" data-ng-model="confirmPasswd"
+          data-ng-disabled="FormStatus.passwd.status!==1">
         <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
       </div>
     </form>
