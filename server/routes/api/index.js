@@ -2,7 +2,7 @@
 
 var config = require('../../config/config');
 var router = require('express').Router();
-var userService = require('../../services/userServices');
+var userService = require('../../services/userService');
 var requestHelper = require('../request-helper')();
 
 
