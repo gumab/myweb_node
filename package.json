@@ -17,7 +17,8 @@
     "passport": "^0.3.2",
     "passport-facebook": "^2.0.0",
     "passport-local": "^1.0.0",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "storage-device-info": "^1.2.0"
   },
   "devDependencies": {
     "connect-inject": "^0.4.0",
