@@ -15,11 +15,15 @@ router.get('/', function (req, res, next) {
 // render page
 router.get('/login', function (req, res, next) {
   var url = req.query.url || req.headers.referer || '';
-  res.render('views/admin/login.html', {
-    page: 4,
-    title: 'Login',
-    data: { user: req.myWeb.user, returnUrl: url }
-  });
+  if (req.isAuthenticated()) {
+    res.redirect('/');
+  } else {
+    res.render('views/admin/login.html', {
+      page: 4,
+      title: 'Login',
+      data: {user: req.myWeb.user, returnUrl: url}
+    });
+  }
 });
 
 
@@ -31,11 +35,15 @@ router.get('/logout', function (req, res, next) {
 
 // render page
 router.get('/signup', function (req, res, next) {
-  res.render('views/admin/signup.html', {
-    page: 5,
-    title: 'Register',
-    data: { user: req.myWeb.user }
-  });
+  if (req.isAuthenticated()) {
+    res.redirect('/');
+  } else {
+    res.render('views/admin/signup.html', {
+      page: 5,
+      title: 'Register',
+      data: {user: req.myWeb.user}
+    });
+  }
 });
 
 // render page
