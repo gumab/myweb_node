@@ -4,9 +4,9 @@ var config = require('../../config/config');
 var router = require('express').Router();
 
 router.get('/', function (req, res, next) {
-  res.render('views/admin/test.html', {
-    page: 2,
-    title: '',
+  res.render('views/admin/test2.html', {
+    title: 'home',
+    layout: 'views/admin/layouts/_nav.html',
     data: { user: req.myWeb.user }
   });
 });
