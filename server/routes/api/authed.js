@@ -3,7 +3,7 @@
 var config = require('../../config/config');
 var router = require('express').Router();
 var requestHelper = require('../request-helper')();
-var storage = require('storage-device-info');
+var ndjs = require('nodejs-disks');
 
 
 router.get('/profile', function (req, res, next) {
@@ -12,13 +12,23 @@ router.get('/profile', function (req, res, next) {
 
 router.get('/diskInfo', function (req, res, next) {
   var R = requestHelper(req);
-  var path = req.query.path || '/';
-  storage.getPartitionSpace(path, function (error, space) {
-    if (error) {
-      next(error);
-    } else {
-      res.json(R.getJSONResponse('000', '', space));
-    }
+
+  ndjs.drives(function (err, driveNames) {
+    var drives = driveNames.filter(function (value, index, arr) {
+      if (value.indexOf('/dev/sd') < 0 && value.indexOf('/dev/root') < 0) {
+        return false;
+      } else {
+        return true;
+      }
+    });
+
+    ndjs.drivesDetail(drives, function (err, driveDetails) {
+      if (err) {
+        next(err);
+      } else {
+        res.json(R.getJSONResponse('000', '', driveDetails))
+      }
+    });
   });
 });
 
