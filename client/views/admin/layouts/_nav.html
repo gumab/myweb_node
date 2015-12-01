@@ -106,13 +106,12 @@
       <ul class="sidebar-menu">
         <li class="header">Menu</li>
         <!-- Optionally, you can add icons to the links -->
-        <li class="active"><a href="#"><i class="fa fa-link"></i> <span>Link</span></a></li>
-        <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
+        <li class="<%-data.page==1?'active':''%>"><a href="/admin/diskinfo"><i class="fa fa-pie-chart"></i> <span>Disk usage info</span></a></li>
+        <li class="<%-data.page==2?'active':''%>"><a href="/admin/test2"><i class="fa fa-cog"></i> <span>Test2</span></a></li>
         <li class="treeview">
-          <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span> <i class="fa fa-angle-left pull-right"></i></a>
+          <a href="#"><i class="fa fa-link"></i> <span>외부 링크</span> <i class="fa fa-angle-left pull-right"></i></a>
           <ul class="treeview-menu">
-            <li><a href="#">Link in level 2</a></li>
-            <li><a href="#">Link in level 2</a></li>
+            <li><a href="/monsta_ftp">Monsta FTP</a></li>
           </ul>
         </li>
       </ul>

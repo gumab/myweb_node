@@ -68,6 +68,7 @@ router.get('/page2', function (req, res, next) {
 
 router.get('/test2', function (req, res, next) {
   res.render('views/admin/test2.html', {
+    page: 2,
     title: 'test2',
     layout: 'views/admin/layouts/_nav.html',
     data: { user: req.myWeb.user }
@@ -80,6 +81,7 @@ router.get('/diskinfo', function (req, res, next) {
       next(err);
     } else {
       res.render('views/admin/diskinfo.html', {
+        page: 1,
         title: 'Disk usage info',
         layout: 'views/admin/layouts/_nav.html',
         data: { user: req.myWeb.user, disks: data }
