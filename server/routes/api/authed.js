@@ -26,7 +26,7 @@ router.get('/diskInfo', function (req, res, next) {
       if (err) {
         next(err);
       } else {
-        res.json(R.getJSONResponse('000', '', driveDetails))
+        res.json(R.getJSONResponse('000', '', driveDetails));
       }
     });
   });

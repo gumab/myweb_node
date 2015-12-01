@@ -1,0 +1,36 @@
+<style>
+  .progress {
+    margin: 0;
+    background-color:gray;
+  }
+  .col-amount{
+    padding:0;
+    margin-bottom:20px;
+  }
+</style>
+<div>
+  <%
+  if(data.disks){
+    for(var i=0;i <data.disks.length; i++){
+  var disk = data.disks[i];
+  %>
+  <h3><label class="label label-primary"><%-disk.mountpoint%></label></h3>
+  <div class="progress">
+    <div class="progress-bar progress-bar-info" style="width: <%-disk.usedPer%>%">
+      <%-disk.usedPer%>%
+    </div>
+  </div>
+  <div class="col-xs-4 col-amount" style="text-align: left">
+    Used : <%-disk.used%>
+  </div>
+  <div class="col-xs-4 col-amount" style="text-align: center">
+    Total : <%-disk.total%>
+  </div>
+  <div class="col-xs-4 col-amount" style=" text-align: right">
+    Available : <%-disk.available%>
+  </div>
+  <%}}%>
+</div>
+<%-contentFor('script')%>
+<script>
+</script>
