@@ -6,13 +6,14 @@ var bcrypt = require('bcrypt-nodejs');
 
 // define the schema for our user model
 
-function User(id, email, name, password, registerDate) {
+function User(id, email, name, password, registerDate, profileImgPath) {
   this.id = id;
   this.local = {
     name: name,
     email: email,
     password: password,
-    registerDate: registerDate
+    registerDate: registerDate,
+    profileImgPath: profileImgPath
   };
 }
 

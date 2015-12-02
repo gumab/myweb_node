@@ -8,5 +8,6 @@ module.exports = {
   webServer: {
     ip: '127.0.0.1',
     port: '1111'
-  }
+  },
+  cryptoKey:'MyNameIsGUMA!@#10102020'
 };

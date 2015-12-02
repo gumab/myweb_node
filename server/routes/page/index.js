@@ -2,13 +2,14 @@
 
 var config = require('../../config/config');
 var router = require('express').Router();
+var userService = require('../../services/userService');
 var deviceService = require('../../services/deviceService');
 
 router.get('/', function (req, res, next) {
   res.render('views/admin/test2.html', {
     title: 'home',
     layout: 'views/admin/layouts/_nav.html',
-    data: { user: req.myWeb.user }
+    data: {user: req.myWeb.user}
   });
 });
 
@@ -22,7 +23,7 @@ router.get('/login', function (req, res, next) {
     res.render('views/admin/login.html', {
       page: 4,
       title: 'Login',
-      data: { user: req.myWeb.user, returnUrl: url }
+      data: {user: req.myWeb.user, returnUrl: url}
     });
   }
 });
@@ -42,27 +43,17 @@ router.get('/signup', function (req, res, next) {
     res.render('views/admin/signup.html', {
       page: 5,
       title: 'Register',
-      data: { user: req.myWeb.user }
+      data: {user: req.myWeb.user}
     });
   }
 });
 
-// render page
-router.get('/page1', function (req, res, next) {
-  res.render('views/admin/partials/page1.html', {
+router.get('/test', function (req, res, next) {
+  res.render('views/admin/test.html', {
     page: 2,
-    title: 'Page1',
-    layout: 'views/admin/index.html',
-    data: { user: req.myWeb.user }
-  });
-});
-
-router.get('/page2', function (req, res, next) {
-  res.render('views/admin/partials/page2.html', {
-    page: 3,
-    title: 'Page2',
-    layout: 'views/admin/index.html',
-    data: { user: req.myWeb.user }
+    title: 'test',
+    layout: 'views/admin/layouts/_nav.html',
+    data: {user: req.myWeb.user || {name: 'TEST', encryptedId: userService.encryptId('123')}}
   });
 });
 
@@ -71,7 +62,7 @@ router.get('/test2', function (req, res, next) {
     page: 2,
     title: 'test2',
     layout: 'views/admin/layouts/_nav.html',
-    data: { user: req.myWeb.user }
+    data: {user: req.myWeb.user}
   });
 });
 
@@ -84,8 +75,20 @@ router.get('/diskinfo', function (req, res, next) {
         page: 1,
         title: 'Disk usage info',
         layout: 'views/admin/layouts/_nav.html',
-        data: { user: req.myWeb.user, disks: data }
+        data: {user: req.myWeb.user, disks: data}
       });
+    }
+  });
+});
+
+
+router.get('/test/profileimg', function (req, res, next) {
+  var id = userService.decryptId(req.query.id);
+  userService.getProfileImagePath(id, function (err, path) {
+    if (err) {
+      next(err);
+    } else {
+      res.sendFile(path);
     }
   });
 });

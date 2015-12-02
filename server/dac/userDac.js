@@ -24,14 +24,19 @@ module.exports = {
   },
 
   selectUser: function (email, callback) {
-    connection.query('select seq,user_mail,user_name,user_pwd,reg_dt from users where user_mail=' +
+    connection.query('select seq,user_mail,user_name,user_pwd,reg_dt,profile_img_path from users where user_mail=' +
       mysql.escape(email), function (err, result) {
       if (err) {
         callback(err);
       } else {
         if (result && result.length > 0) {
           result = result[0];
-          var user = new User(result.seq, result.user_mail, result.user_name, result.user_pwd, result.reg_dt);
+          var user = new User(result.seq,
+            result.user_mail,
+            result.user_name,
+            result.user_pwd,
+            result.reg_dt,
+            result.profile_img_path);
           callback(null, user);
         } else {
           callback(null, null);
@@ -41,14 +46,19 @@ module.exports = {
   },
 
   selectUserBySeq: function (seq, callback) {
-    connection.query('select seq,user_mail,user_name,user_pwd,reg_dt from users where seq=' +
+    connection.query('select seq,user_mail,user_name,user_pwd,reg_dt,profile_img_path from users where seq=' +
       mysql.escape(seq), function (err, result) {
       if (err) {
         callback(err);
       } else {
         if (result && result.length > 0) {
           result = result[0];
-          var user = new User(result.seq, result.user_mail, result.user_name, result.user_pwd, result.reg_dt);
+          var user = new User(result.seq,
+            result.user_mail,
+            result.user_name,
+            result.user_pwd,
+            result.reg_dt,
+            result.profile_img_path);
           callback(null, user);
         } else {
           callback(null, null);
