@@ -3,6 +3,8 @@
 var User = require('../models/user');
 var MyWebError = require('../lib/middlewares/error-handler').MyWebError;
 var userDac = require('../dac/userDac');
+var fs = require('fs');
+var path = require('path');
 var crypto = require('crypto');
 var config = require('../config/config');
 
@@ -21,6 +23,79 @@ module.exports = {
     };
     if (user && ((user.local && user.local.email) || user.id)) {
       if (user.local && user.local.email) {
+        userDac.selectUser(user.local.email, cb);
+      } else {
+        userDac.selectUserBySeq(user.id, cb);
+      }
+    } else {
+      callback(new MyWebError('user validation failed', '', '201'));
+    }
+  },
+
+  changeUserProfileImage: function (encryptedId, file, callback) {
+    var userId = this.decryptId(encryptedId);
+    var self = this;
+    fs.readFile(file.path, function (err, data) {
+      var filePath = path.join(config.imageFolder, getProfileImageName(userId, file.name));
+      var reSizedData = '';
+      try {
+        reSizedData = require('imagemagick-native').convert({
+          srcData: data,
+          width: 200,
+          height: 200,
+          resizeStyle: 'aspectfill', // is the default, or 'aspectfit' or 'fill'
+          gravity: 'Center' // optional: position crop area when using 'aspectfill'
+        });
+      } catch (e) {
+        reSizedData = data;
+      }
+      fs.writeFile(filePath, reSizedData, function (err) {
+        if (err) {
+          callback(err);
+        } else {
+          require('easyimage').thumbnail({
+            src: filePath, dst: filePath + '.' + getFileType(filePath)
+          });
+          var user = new User(userId, '', '', '', '', filePath);
+          self.setUserProfileImagePath(user, function (err, data) {
+            if (err) {
+              callback(err);
+            } else {
+              console.log(data.originPath);
+              if (data.originPath && fs.existsSync(data.originPath)) {
+                fs.rename(data.originPath, path.join(config.retentionImageFolder, path.basename(data.originPath)));
+              }
+              callback();
+            }
+          });
+        }
+      });
+    });
+  },
+
+  setUserProfileImagePath: function (user, callback) {
+    var result = {originPath: ''};
+    var cb = function (err, resultUser) {
+      if (err) {
+        callback(err);
+      } else {
+        if (!resultUser) {
+          callback(new MyWebError('no user', '', '101'));
+        } else {
+          result.originPath = resultUser.local.profileImgPath;
+          resultUser.local.profileImgPath = user.local.profileImgPath;
+          userDac.updateUser(resultUser, function (err, data) {
+            if (err) {
+              callback(err);
+            } else {
+              callback(null, result);
+            }
+          });
+        }
+      }
+    };
+    if (user && ((user.local && user.local.email) || user.id)) {
+      if (!user.id) {
         userDac.selectUser(user.local.email, cb);
       } else {
         userDac.selectUserBySeq(user.id, cb);
@@ -81,7 +156,7 @@ module.exports = {
   },
 
   getProfileImagePath: function (id, callback) {
-    var defaultPath = config.root + '/client/assets/img/user3-128x128.jpg';
+    var defaultPath = config.root + '/client/assets/img/user2-160x160.jpg';
     var reqUser = {
       id: id
     };
@@ -89,7 +164,11 @@ module.exports = {
       if (err) {
         callback(err);
       } else {
-        callback(null, user.profileImgPath || defaultPath);
+        if (user.local.profileImgPath && fs.existsSync(user.local.profileImgPath)) {
+          callback(null, user.local.profileImgPath);
+        } else {
+          callback(defaultPath);
+        }
       }
     });
   }
@@ -133,3 +212,35 @@ function decrypt(text, key) {
 
   return decipheredPlaintext;
 }
+
+
+function getProfileImageName(userId, originName) {
+
+  return userId + '_' + getNowTimeString() + '.' + getFileType(originName);
+}
+
+function getNowTimeString() {
+  var now = new Date();
+  var yyyy = now.getFullYear().toString();
+  var mm = (now.getMonth() + 1).toString(); // getMonth() is zero-based
+  var dd = now.getDate().toString();
+  var hh = now.getHours().toString();
+  var MM = now.getMinutes().toString();
+  var ss = now.getSeconds().toString();
+  var milsec = now.getMilliseconds().toString();
+  return yyyy + getDigit(mm) + getDigit(dd) + getDigit(hh) + getDigit(MM) + getDigit(ss) + getDigit(milsec, 3);
+}
+
+function getDigit(input, digitNo) {
+  if (digitNo && digitNo > 2) {
+    return input[digitNo - 1] ? input : '0' + getDigit(input, digitNo - 1);
+  } else {
+    return input[1] ? input : '0' + input[0];
+  }
+}
+
+function getFileType(filename) {
+  var list = filename.split('.');
+  return list[list.length - 1];
+}
+

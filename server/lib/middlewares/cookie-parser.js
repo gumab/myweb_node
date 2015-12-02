@@ -2,7 +2,7 @@
 
 var userService = require('../../services/userService');
 var allowAnonymousUrl = [
-  '/api/', '/login', '/signup', '/test'
+  '/api/', '/login', '/signup'
 ];
 var authUrl = [
   '/api/auth/'
@@ -31,9 +31,11 @@ module.exports = function (app) {
     }
 
     if (req.isAuthenticated()) {
+      var encryptedId = userService.encryptId(req.user.id.toString());
       req.myWeb.isLogOn = true;
       req.myWeb.user = {
-        encryptedId: userService.encryptId(req.user.id.toString()),
+        encryptedId: encryptedId,
+        profileUrl: '/admin/profileimg?id=' + encryptedId,
         email: req.user.local.email,
         name: req.user.local.name,
         registerDate: req.user.local.registerDate

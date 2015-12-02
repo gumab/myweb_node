@@ -6,26 +6,14 @@
       <!-- Profile Image -->
       <div class="box box-primary">
         <div class="box-body box-profile">
-          <img class="profile-user-img img-responsive img-circle" src="/admin/test/profileimg?id=<%-data.user.encryptedId%>"
+          <img class="profile-user-img img-responsive img-circle" src="<%-data.user.profileUrl%>"
                alt="User profile picture">
 
-          <h3 class="profile-username text-center">Nina Mcintire</h3>
+          <h3 class="profile-username text-center"><%-data.user.name%></h3>
 
-          <p class="text-muted text-center">Software Engineer</p>
+          <p class="text-muted text-center"></p>
 
-          <ul class="list-group list-group-unbordered">
-            <li class="list-group-item">
-              <b>Followers</b> <a class="pull-right">1,322</a>
-            </li>
-            <li class="list-group-item">
-              <b>Following</b> <a class="pull-right">543</a>
-            </li>
-            <li class="list-group-item">
-              <b>Friends</b> <a class="pull-right">13,287</a>
-            </li>
-          </ul>
-
-          <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
+          <a href="javascript:profileModal()" class="btn btn-primary btn-block"><b>Edit</b></a>
         </div>
         <!-- /.box-body -->
       </div>
@@ -355,3 +343,29 @@
   </div>
   <!-- /.row -->
 </section>
+
+<div id="modalDiv" class="modal fade " tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true"
+     style="display: none;">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
+        </button>
+        <h4 class="modal-title" id="modalLabel"></h4>
+      </div>
+      <div id="modalBody" class="modal-body" style="text-align:right">
+        <form action="/admin/uploadprofile" enctype="multipart/form-data" method="post">
+          <input class="form-control" name="upload" type="file" accept="image/*"/>
+          <br/>
+          <input class="btn btn-default" type="submit" value="Upload"/>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function profileModal() {
+    $('#modalDiv').modal('show');
+  }
+</script>

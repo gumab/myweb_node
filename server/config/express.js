@@ -3,6 +3,7 @@
 var express = require('express'),
   bodyParser = require('body-parser'),
   cookieParser = require('cookie-parser'),
+  multiparty = require('connect-multiparty'),
   path = require('path'),
   config = require('./config'),
   session= require('express-session'),
@@ -25,6 +26,7 @@ module.exports = function (app) {
 
   app.use(expressLayouts);
 
+  app.use(multiparty());
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(cookieParser());

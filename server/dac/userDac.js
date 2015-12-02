@@ -65,5 +65,21 @@ module.exports = {
         }
       }
     });
+  },
+
+  updateUser: function (user, callback) {
+    var userT = {
+      user_name: user.local.name,
+      user_pwd: user.local.password,
+      profile_img_path: user.local.profileImgPath
+    };
+    var data = [userT, user.id];
+    connection.query('update users set ? where seq = ?', data, function (err, result) {
+      if (err) {
+        callback(err);
+      } else {
+        callback(null, user);
+      }
+    });
   }
 };

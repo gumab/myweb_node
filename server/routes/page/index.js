@@ -82,13 +82,23 @@ router.get('/diskinfo', function (req, res, next) {
 });
 
 
-router.get('/test/profileimg', function (req, res, next) {
+router.get('/profileimg', function (req, res, next) {
   var id = userService.decryptId(req.query.id);
   userService.getProfileImagePath(id, function (err, path) {
     if (err) {
       next(err);
     } else {
       res.sendFile(path);
+    }
+  });
+});
+
+router.post('/uploadprofile', function (req, res, next) {
+  userService.changeUserProfileImage(req.myWeb.user.encryptedId, req.files.upload, function (err) {
+    if (err) {
+      next(err);
+    } else {
+      res.redirect('back');
     }
   });
 });
