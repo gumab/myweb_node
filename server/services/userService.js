@@ -53,9 +53,6 @@ module.exports = {
         if (err) {
           callback(err);
         } else {
-          require('easyimage').thumbnail({
-            src: filePath, dst: filePath + '.' + getFileType(filePath)
-          });
           var user = new User(userId, '', '', '', '', filePath);
           self.setUserProfileImagePath(user, function (err, data) {
             if (err) {
