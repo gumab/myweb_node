@@ -33,8 +33,8 @@ module.exports = {
   },
 
   changeUserProfileImage: function (encryptedId, file, callback) {
-    var userId = this.decryptId(encryptedId);
     var self = this;
+    var userId = self.decryptId(encryptedId);
     fs.readFile(file.path, function (err, data) {
       var filePath = path.join(config.imageFolder, getProfileImageName(userId, file.name));
       var reSizedData = '';
@@ -153,18 +153,19 @@ module.exports = {
   },
 
   getProfileImagePath: function (id, callback) {
+    var self = this;
     var defaultPath = config.root + '/client/assets/img/user2-160x160.jpg';
     var reqUser = {
       id: id
     };
-    this.getUser(reqUser, function (err, user) {
+    self.getUser(reqUser, function (err, user) {
       if (err) {
         callback(err);
       } else {
         if (user.local.profileImgPath && fs.existsSync(user.local.profileImgPath)) {
           callback(null, user.local.profileImgPath);
         } else {
-          callback(defaultPath);
+          callback(null, defaultPath);
         }
       }
     });
