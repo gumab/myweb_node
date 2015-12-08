@@ -48,12 +48,12 @@ router.get('/signup', function (req, res, next) {
   }
 });
 
-router.get('/test', function (req, res, next) {
-  res.render('views/admin/test.html', {
+router.get('/profile', function (req, res, next) {
+  res.render('views/admin/profile.html', {
     page: 2,
-    title: 'test',
+    title: 'Profile',
     layout: 'views/admin/layouts/_nav.html',
-    data: {user: req.myWeb.user || {name: 'TEST', encryptedId: userService.encryptId('123')}}
+    data: {user: req.myWeb.user}
   });
 });
 
