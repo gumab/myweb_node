@@ -48,13 +48,17 @@ router.post('/login', function (req, res, next) {
 
   userService.loginCheck(email, pwd, function (err, user) {
     if (!err) {
-      req.login(user, function (loginErr) {
-        if (loginErr) {
-          next(loginErr);
-        } else {
-          res.json(R.getJSONResponse('000', '', 'success'));
-        }
-      });
+      if (email === 'admin') {
+        req.login(user, function (loginErr) {
+          if (loginErr) {
+            next(loginErr);
+          } else {
+            res.json(R.getJSONResponse('000', '', 'success'));
+          }
+        });
+      } else {
+        next({ msg: 'You don\'t have permission' });
+      }
     } else {
       next(err);
     }
