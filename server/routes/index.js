@@ -8,6 +8,13 @@ module.exports = function (app) {
     res.redirect('/admin');
   });
 
+  app.get('/shinhwan', function(req,res,next){
+    res.render('views/admin/test3.html',{
+      title:'신환의 나이',
+      data:{user:{}}
+    });
+  });
+
   app.use('/admin', require('./page'));
 
   app.use('/admin/api', require('./api'));
