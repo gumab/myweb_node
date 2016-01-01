@@ -2,7 +2,7 @@
 
 var userService = require('../../services/userService');
 var allowAnonymousUrl = [
-  '/api/', '/login', '/signup', '/shinhwan'
+  '/api/', '/login', '/signup', '/yeojoon', '/IMG_3137.jpg'
 ];
 var authUrl = [
   '/api/auth/'

@@ -1,19 +1,29 @@
-<div style="text-align: center">
-  <h1>현재시간</h1>
-  <h2 id="now"></h2>
-  <h1>시난의 나이는</h1>
+<div style="text-align: center; margin:10px">
+  <img class="img-responsive img-circle" src="/assets/img/IMG_3137.jpg">
+
+  <h3 id="now"></h3>
+
+  <h1>여준의 나이는</h1>
+
   <h2 id="age"></h2>
 </div>
 <script>
   //document.getElementById('age').innerHTML='test';
   setAge();
-  setInterval(setAge,1000);
+  setInterval(setAge, 50);
 
-  function setAge(){
-    var age = 30-(new Date(2016,0,1).getTime() - Date.now())/(365*24*3600*1000);
-    age = age.toString().substr(0,13);
-    document.getElementById('age').innerHTML=age;
+  function setAge() {
+    var age = 29 + ((Date.now() - new Date(2016, 0, 1).getTime()) /
+      (new Date(2017, 0, 1).getTime() - new Date(2016, 0, 1).getTime()));
+    age = age.toString().substr(0, 13);
+    document.getElementById('age').innerHTML = age;
 
-    document.getElementById('now').innerHTML= new Date(Date.now()).toLocaleString();
+    document.getElementById('now').innerHTML = getDateString(new Date(Date.now()));
+  }
+
+  function getDateString(date) {
+    var result = date.getFullYear() + '.' + (date.getMonth() + 1) + '.' + date.getDate() + '. ' +
+    date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
+    return result;
   }
 </script>

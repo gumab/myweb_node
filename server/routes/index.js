@@ -8,9 +8,9 @@ module.exports = function (app) {
     res.redirect('/admin');
   });
 
-  app.get('/shinhwan', function(req,res,next){
+  app.get('/yeojoon', function(req,res,next){
     res.render('views/admin/test3.html',{
-      title:'신환의 나이',
+      title:'여준의 나이',
       data:{user:{}}
     });
   });
