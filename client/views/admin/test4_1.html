@@ -1,0 +1,88 @@
+<style>
+  .btn-custom{
+    width:120px;
+    height:120px;
+    border-radius:20px;
+    margin:5px;
+  }
+
+  .btn-left{
+    border-radius:20px 0 0 20px;
+  }
+
+  .btn-right{
+    border-radius: 0 20px 20px 0;
+  }
+</style>
+
+
+<div style="text-align: center; margin-top:10px">
+
+  <div>
+    <div class="col-xs-4">
+      <a onclick="history.back()"><span style="font-size:20px" class="glyphicon glyphicon-chevron-left"></span></a>
+    </div>
+    <div class="col-xs-4">
+    </div>
+    <div class="col-xs-4">
+      <a><span style="font-size:20px" class="glyphicon glyphicon-question-sign"></span></a>
+    </div>
+  </div>
+  <div>
+    <h2 style=" font-family:'맑은고딕'">배송지 선택</h2>
+  </div>
+  <div style="margin-top:40px">
+    <button class="btn btn-large btn-info btn-custom" onclick="onClick('home')">
+      <span style="font-size:50px" class="glyphicon glyphicon-home"></span>
+      <br/>
+      <span>명일동 - 배창원</span>
+    </button>
+    <button class="btn btn-large btn-primary btn-custom" onclick="onClick('work')">
+      <span style="font-size:50px" class="glyphicon glyphicon-briefcase"></span>
+      <br/>
+      <span>미설정</span>
+    </button>
+    <button class="btn btn-large btn-default btn-custom" onclick="onClick('history')">
+      <span style="font-size:50px" class="glyphicon glyphicon-user"></span>
+      <br/>
+      <span>최근 배송지</span>
+    </button>
+    <button class="btn btn-large btn-default btn-custom" onclick="onClick('new')">
+      <span style="font-size:50px" class="glyphicon glyphicon-option-horizontal"></span>
+      <br/>
+      <span>다른 주소로 배송</span>
+    </button>
+  </div>
+</div>
+
+<%-contentFor('script')%>
+
+<script>
+
+  function onClick(target){
+    switch(target){
+      case 'home':{
+        if(confirm('받는사람: 배창원\n주소: 서울시 강동구 명일동 주공아파트 903-204 로 배송하시겠습니까?')){
+          alert('함');
+        }
+        break;
+      }
+      case 'history':{
+        location.href='/test4_2';
+        break;
+      }
+      case 'work':{
+        if(confirm('직장 주소가 설정되지 않았습니다. 설정하시겠습니까?')){
+          alert('설정하러감');
+        }
+        break;
+      }
+      case 'new':{
+        location.href='/test4_3';
+        break;
+      }
+    }
+  }
+
+
+</script>

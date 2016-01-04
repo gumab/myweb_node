@@ -16,9 +16,45 @@ module.exports = function (app) {
   });
 
   app.get('/test', function(req,res,next){
-    res.render('views/admin/test4.html',{
+    res.render('views/admin/test4_1.html',{
       title:'TEST page',
       data:{user:{}}
+    });
+  });
+
+  app.get('/test4', function(req,res,next){
+    res.render('views/admin/test4_1.html',{
+      title:'TEST page',
+      data:{user:{}}
+    });
+  });
+
+  app.get('/test4_2', function(req,res,next){
+    res.render('views/admin/test4_2.html',{
+      title:'TEST page',
+      data:{user:{}}
+    });
+  });
+
+  app.get('/test4_3', function(req,res,next){
+    res.render('views/admin/test4_3.html',{
+      title:'TEST page',
+      data:{user:{}}
+    });
+  });
+
+  app.get('/test5', function(req,res,next){
+    res.render('views/admin/test5.html',{
+      title:'TEST page',
+      data:{user:{}}
+    });
+  });
+
+  app.get('/test5_1', function(req,res,next){
+    var addr = req.query.addr;
+    res.render('views/admin/test5_1.html',{
+      title:'TEST page',
+      data:{user:{}, addr:addr||''}
     });
   });
 

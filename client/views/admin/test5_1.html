@@ -1,0 +1,70 @@
+<style>
+</style>
+
+
+<div style="text-align: center; margin-top:10px">
+
+  <div>
+    <div class="col-xs-4">
+      <a onclick="history.back()"><span style="font-size:20px" class="glyphicon glyphicon-chevron-left"></span></a>
+    </div>
+    <div class="col-xs-4">
+    </div>
+    <div class="col-xs-4">
+      <a><span style="font-size:20px" class="glyphicon glyphicon-question-sign"></span></a>
+    </div>
+  </div>
+  <div>
+    <h2 style=" font-family:'맑은고딕'">배송지 선택</h2>
+    <h6>우편번호를 확인해주세요</h6>
+  </div>
+
+  <hr/>
+
+  <form style="display:none">
+    <!-- 주소와 우편번호를 입력할 <input>들을 생성하고 적당한 name과 id를 부여한다 -->
+    <input class="form-control" type="text" name="" id="postcode" value=""/><br/>
+    <input class="form-control" type="text" name="" id="address" value=""/><br/>
+    <input class="form-control" type="text" name="" id="details" value=""/><br/>
+    <input class="form-control" type="text" name="" id="extra_info" value=""/><br/>
+  </form>
+
+  <hr/>
+
+  <!-- 검색 기능을 표시할 <div>를 생성한다 -->
+  <div id="postcodify"></div>
+</div>
+
+<%-contentFor('script')%>
+
+<script src="//cdn.poesis.kr/post/search.min.js"></script>
+
+<script>
+
+  var addrName = myWeb.data.addr;
+
+init();
+  function init() {
+    $(function () {
+      $("#postcodify").postcodify({
+        insertPostcode5: "#postcode",
+        insertAddress: "#address",
+        insertDetails: "#details",
+        insertExtraInfo: "#extra_info",
+        hideOldAddresses: false
+      });
+    });
+
+    var interval = setInterval(function () {
+      if ($('.keyword')[0] && $('.search_button')[0]) {
+        clearInterval(interval);
+        $('.keyword').css('display', 'none');
+        $('.search_button').css('display', 'none');
+
+        $('.keyword').val(addrName);
+        $('.search_button').click();
+      }
+    }, 100);
+  }
+
+</script>

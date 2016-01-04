@@ -1,0 +1,89 @@
+<style>
+  .btn-custom{
+    width:250px;
+    height:80px;
+    border-radius:10px;
+    margin:5px;
+    text-align:left;
+  }
+
+  .btn-left{
+    border-radius:20px 0 0 20px;
+  }
+
+  .btn-right{
+    border-radius: 0 20px 20px 0;
+  }
+</style>
+
+
+<div style="text-align: center; margin-top:10px">
+
+  <div>
+    <div class="col-xs-4">
+      <a onclick="history.back()"><span style="font-size:20px" class="glyphicon glyphicon-chevron-left"></span></a>
+    </div>
+    <div class="col-xs-4">
+    </div>
+    <div class="col-xs-4">
+      <a><span style="font-size:20px" class="glyphicon glyphicon-question-sign"></span></a>
+    </div>
+  </div>
+  <div>
+    <h2 style=" font-family:'맑은고딕'">배송지 선택</h2>
+  </div>
+  <div style="margin-top:40px">
+    <button class="btn btn-large btn-default btn-custom" onclick="onClick('go',1)">
+      <span class="glyphicon glyphicon-user" style="font-weight:bold;font-size:20px"> 배창원</span><br/>
+      <span>서울시 강남구 테헤란로 152</span><br/>
+      <span> 강남파이낸스센터 37F 이베이코리아</span>
+    </button>
+    <button class="btn btn-large btn-default btn-custom" onclick="onClick('go',2)">
+      <span class="glyphicon glyphicon-user" style="font-weight:bold;font-size:20px"> 배창원</span><br/>
+      <span>서울시 강남구 압구정로 30길 72</span><br/>
+      <span>ROPE 비지니스센터 2층</span>
+    </button>
+    <button class="btn btn-large btn-default btn-custom" onclick="onClick('go',3)">
+      <span class="glyphicon glyphicon-user" style="font-weight:bold;font-size:20px"> 김광민</span><br/>
+      <span>부산 해운대구 센텀남대로 35 </span><br/>
+      <span>센텀시티 2층</span>
+    </button>
+  </div>
+</div>
+
+<%-contentFor('script')%>
+
+<script>
+
+  function onClick(target, no){
+    switch(target){
+      case 'back':{
+        history.back();
+        break;
+      }
+      case 'go':{
+        var addr = '';
+        switch(no){
+          case 1:{
+            addr = '받는사람: 배창원\n주소: 서울시 강남구 테헤란로 152 강남파이낸스센터 37F 이베이코리아 (으)로 배송하시겠습니까?';
+            break;
+          }
+          case 2:{
+            addr = '받는사람: 배창원\n주소: 서울시 강남구 압구정로 30길 72 ROPE 비지니스센터 2층 (으)로 배송하시겠습니까?';
+            break;
+          }
+          case 3:{
+            addr = '받는사람: 김광민\n주소: 부산 해운대구 센텀남대로 35 센텀시티 2층 (으)로 배송하시겠습니까?';
+            break;
+          }
+        }
+        if(confirm(addr)){
+          alert('함');
+        }
+        break;
+      }
+    }
+  }
+
+
+</script>

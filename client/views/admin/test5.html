@@ -2,7 +2,7 @@
   .map_wrap {
     position: relative;
     margin: 10px 10px 10px 0;
-    height: 200px;
+    height: 250px;
   }
 
   .title {
@@ -36,20 +36,36 @@
 </style>
 
 
-<script type="text/javascript"
-        src="//apis.daum.net/maps/maps3.js?apikey=0bce2b80336cbb209915bf8a9587be8159cb7ce3&libraries=services"></script>
+<div style="text-align: center; margin-top:10px">
 
 
-<div class="map_wrap" style="margin:10px;">
-  <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
-  <!--<div class="hAddr">-->
+  <div id="loading" style="position:fixed; width:100%;height:100%;text-align:center; z-index:100">
+    <img style="margin-top:200px ;width:50px;height:50px" src="/assets/img/loading.gif"/>
+    <h6>위치를 확인하는 중..</h6>
+  </div>
+
+  <div>
+    <div class="col-xs-4">
+      <a onclick="history.back()"><span style="font-size:20px" class="glyphicon glyphicon-chevron-left"></span></a>
+    </div>
+    <div class="col-xs-4">
+    </div>
+    <div class="col-xs-4">
+      <a><span style="font-size:20px" class="glyphicon glyphicon-question-sign"></span></a>
+    </div>
+  </div>
+  <div>
+    <h2 style=" font-family:'맑은고딕'">배송지 선택</h2>
+    <h6>희망하는 배송 위치를 클릭해주세요</h6>
+  </div>
+
+  <div class="map_wrap" style="margin:10px;">
+    <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
+    <!--<div class="hAddr">-->
     <!--<span class="title">지도중심기준 행정동 주소정보</span>-->
     <!--<span id="centerAddr"></span>-->
-  <!--</div>-->
-</div>
-
-
-<div style="text-align: center; margin-top:10px">
+    <!--</div>-->
+  </div>
 
   <h3 style="display: none;" id="message"></h3>
 
@@ -57,31 +73,23 @@
 
   <h3 style="display:none;" id="longitude"></h3>
 
-  <div style="display:none" id="addrDetail"></div>
+  <div id="addrDetail"></div>
 
-  <!-- 검색 기능을 표시할 <div>를 생성한다 -->
-  <div id="postcodify"></div>
-
-  <!-- 주소와 우편번호를 입력할 <input>들을 생성하고 적당한 name과 id를 부여한다 -->
-  <input style="display:none;" type="text" name="" id="postcode" value=""/><br/>
-  <input style="display:none;" type="text" name="" id="address" value=""/><br/>
-  <input style="display:none;" type="text" name="" id="details" value=""/><br/>
-  <input style="display:none;" type="text" name="" id="extra_info" value=""/><br/>
-
-  <!-- jQuery와 Postcodify를 로딩한다 -->
-
+  <div id="btnDiv" style="display:none;margin-top:10px">
+    <button class="btn btn-large btn-primary" style="font-weight:bold" onclick="goNext()">확인</button>
+  </div>
 
 </div>
-
 
 <%-contentFor('script')%>
 
 
-<script src="//cdn.poesis.kr/post/search.min.js"></script>
+<script type="text/javascript"
+        src="//apis.daum.net/maps/maps3.js?apikey=0bce2b80336cbb209915bf8a9587be8159cb7ce3&libraries=services"></script>
 
 <script>
 
-  var geocoder, marker, map, infowindow;
+  var geocoder, marker, map, infowindow, currentAddr;
   var wpid;
   var DEFAULT_COORDS = {
     latitude: 37.566826,
@@ -157,9 +165,9 @@
         //        infowindow.open(map, marker);
 
         document.getElementById('addrDetail').innerHTML = content;
-
-        $('.keyword').val(!!result[0].roadAddress.name?result[0].roadAddress.name:result[0].jibunAddress.name);
-        $('.search_button').click();
+        currentAddr = !!result[0].roadAddress.name?result[0].roadAddress.name:result[0].jibunAddress.name;
+        $('#loading').css('display', 'none');
+        $('#btnDiv').css('display', '');
       }
     }
   }
@@ -177,8 +185,8 @@
   // 지도 좌측상단에 지도 중심좌표에 대한 주소정보를 표출하는 함수입니다
   function displayCenterInfo(status, result) {
     if (status === daum.maps.services.Status.OK) {
-//      var infoDiv = document.getElementById('centerAddr');
-//      infoDiv.innerHTML = result[0].fullName;
+      //      var infoDiv = document.getElementById('centerAddr');
+      //      infoDiv.innerHTML = result[0].fullName;
     }
   }
 
@@ -226,25 +234,15 @@
 
   function init() {
     messageLbl = document.getElementById('message');
+    get_pos();
+  }
 
-    $(function () {
-      $("#postcodify").postcodify({
-        insertPostcode5: "#postcode",
-        insertAddress: "#address",
-        insertDetails: "#details",
-        insertExtraInfo: "#extra_info",
-        hideOldAddresses: false
-      });
-    });
-
-    var interval = setInterval(function () {
-      if ($('.keyword')[0] && $('.search_button')[0]) {
-        clearInterval(interval);
-        $('.keyword').css('display', 'none');
-        $('.search_button').css('display', 'none');
-        get_pos();
-      }
-    }, 100);
+  function goNext(){
+    if(currentAddr){
+      location.href='/test5_1?addr='+currentAddr;
+    }else{
+      alert('위치를 확인해주세요');
+    }
   }
 
 </script>
