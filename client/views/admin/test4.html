@@ -42,10 +42,10 @@
 
 <div class="map_wrap">
   <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
-  <div class="hAddr">
-    <span class="title">지도중심기준 행정동 주소정보</span>
-    <span id="centerAddr"></span>
-  </div>
+  <!--<div class="hAddr">-->
+    <!--<span class="title">지도중심기준 행정동 주소정보</span>-->
+    <!--<span id="centerAddr"></span>-->
+  <!--</div>-->
 </div>
 
 
@@ -58,11 +58,35 @@
   <h3 style="display:none;" id="longitude"></h3>
 
   <div id="addrDetail"></div>
+
+  <!-- 검색 기능을 표시할 <div>를 생성한다 -->
+  <div id="postcodify"></div>
+
+  <!-- 주소와 우편번호를 입력할 <input>들을 생성하고 적당한 name과 id를 부여한다 -->
+  <input style="display:none;" type="text" name="" id="postcode" value=""/><br/>
+  <input style="display:none;" type="text" name="" id="address" value=""/><br/>
+  <input style="display:none;" type="text" name="" id="details" value=""/><br/>
+  <input style="display:none;" type="text" name="" id="extra_info" value=""/><br/>
+
+  <!-- jQuery와 Postcodify를 로딩한다 -->
+
+
 </div>
+
+
+<%-contentFor('script')%>
+
+
+<script src="//cdn.poesis.kr/post/search.min.js"></script>
 
 <script>
 
-  var geocoder;
+  var geocoder, marker, map, infowindow;
+  var wpid;
+  var DEFAULT_COORDS = {
+    latitude: 37.566826,
+    longitude: 126.9786567
+  };
 
   function map_init(lat, lng) {
 
@@ -72,8 +96,8 @@
       latitude = lat;
       longitude = lng;
     } else {
-      latitude = 37.566826;
-      longitude = 126.9786567;
+      latitude = DEFAULT_COORDS.latitude;
+      longitude = DEFAULT_COORDS.longitude;
     }
 
     var mapContainer = document.getElementById('map'), // 지도를 표시할 div
@@ -83,60 +107,61 @@
       };
 
     // 지도를 생성합니다
-    var map = new daum.maps.Map(mapContainer, mapOption);
+    map = new daum.maps.Map(mapContainer, mapOption);
+
+    // 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
+    var zoomControl = new daum.maps.ZoomControl();
+    map.addControl(zoomControl, daum.maps.ControlPosition.RIGHT);
+
 
     // 주소-좌표 변환 객체를 생성합니다
     geocoder = new daum.maps.services.Geocoder();
 
-    var marker = new daum.maps.Marker(), // 클릭한 위치를 표시할 마커입니다
-      infowindow = new daum.maps.InfoWindow({ zindex: 1 }); // 클릭한 위치에 대한 주소를 표시할 인포윈도우입니다
+    marker = new daum.maps.Marker(); // 클릭한 위치를 표시할 마커입니다
+    infowindow = new daum.maps.InfoWindow({ zindex: 1 }); // 클릭한 위치에 대한 주소를 표시할 인포윈도우입니다
 
     // 현재 지도 중심좌표로 주소를 검색해서 지도 좌측 상단에 표시합니다
     searchAddrFromCoords(map.getCenter(), displayCenterInfo);
 
 
-    searchDetailAddrFromCoords(map.getCenter(), function (status, result) {
-      if (status === daum.maps.services.Status.OK) {
-        var detailAddr = !!result[0].roadAddress.name ? '<div>도로명주소 : ' + result[0].roadAddress.name + '</div>' : '';
-        detailAddr += '<div>지번 주소 : ' + result[0].jibunAddress.name + '</div>';
-
-        var content = '<div class="bAddr">' +
-          '<span class="title">법정동 주소정보</span>' +
-          detailAddr +
-          '</div>';
-
-        document.getElementById('addrDetail').innerHTML=content;
-
-      }
-    });
+    searchDetailAddrFromCoords(map.getCenter(), checkOnMap(map.getCenter()));
 
     // 지도를 클릭했을 때 클릭 위치 좌표에 대한 주소정보를 표시하도록 이벤트를 등록합니다
     daum.maps.event.addListener(map, 'click', function (mouseEvent) {
-      searchDetailAddrFromCoords(mouseEvent.latLng, function (status, result) {
-        if (status === daum.maps.services.Status.OK) {
-          var detailAddr = !!result[0].roadAddress.name ? '<div>도로명주소 : ' + result[0].roadAddress.name + '</div>' : '';
-          detailAddr += '<div>지번 주소 : ' + result[0].jibunAddress.name + '</div>';
-
-          var content = '<div class="bAddr">' +
-            '<span class="title">법정동 주소정보</span>' +
-            detailAddr +
-            '</div>';
-
-          // 마커를 클릭한 위치에 표시합니다
-          marker.setPosition(mouseEvent.latLng);
-          marker.setMap(map);
-
-          // 인포윈도우에 클릭한 위치에 대한 법정동 상세 주소정보를 표시합니다
-          infowindow.setContent(content);
-          infowindow.open(map, marker);
-        }
-      });
+      searchDetailAddrFromCoords(mouseEvent.latLng, checkOnMap(mouseEvent.latLng));
     });
 
     // 중심 좌표나 확대 수준이 변경됐을 때 지도 중심 좌표에 대한 주소 정보를 표시하도록 이벤트를 등록합니다
     daum.maps.event.addListener(map, 'idle', function () {
       searchAddrFromCoords(map.getCenter(), displayCenterInfo);
     });
+  }
+
+  function checkOnMap(coords) {
+    return function (status, result) {
+      if (status === daum.maps.services.Status.OK) {
+        var detailAddr = !!result[0].roadAddress.name ? '<div>도로명주소 : ' + result[0].roadAddress.name + '</div>' : '';
+        detailAddr += '<div>지번 주소 : ' + result[0].jibunAddress.name + '</div>';
+
+        var content = '<div class="bAddr">' +
+          '<span class="title">주소정보</span>' +
+          detailAddr +
+          '</div>';
+
+        // 마커를 클릭한 위치에 표시합니다
+        marker.setPosition(coords);
+        marker.setMap(map);
+        //
+        //        // 인포윈도우에 클릭한 위치에 대한 법정동 상세 주소정보를 표시합니다
+        //        infowindow.setContent(content);
+        //        infowindow.open(map, marker);
+
+        document.getElementById('addrDetail').innerHTML = content;
+
+        $('.keyword').val(!!result[0].roadAddress.name?result[0].roadAddress.name:result[0].jibunAddress.name);
+        $('.search_button').click();
+      }
+    }
   }
 
   function searchAddrFromCoords(coords, callback) {
@@ -152,15 +177,14 @@
   // 지도 좌측상단에 지도 중심좌표에 대한 주소정보를 표출하는 함수입니다
   function displayCenterInfo(status, result) {
     if (status === daum.maps.services.Status.OK) {
-      var infoDiv = document.getElementById('centerAddr');
-      infoDiv.innerHTML = result[0].fullName;
+//      var infoDiv = document.getElementById('centerAddr');
+//      infoDiv.innerHTML = result[0].fullName;
     }
   }
 
 
   init();
-  var wpid = false;
-  var map, z, messageLbl, prev_lat, prev_long, min_speed = 0, max_speed = 0, min_altitude = 0, max_altitude = 0, distance_travelled = 0, min_accuracy = 150, date_pos_updated = "", info_string = "";
+
   function format_time_component(time_component) {
     if (time_component < 10)
       time_component = "0" + time_component;
@@ -169,42 +193,16 @@
     return time_component;
   }
   function geo_success(position) {
-    info_string = "";
-    var d = new Date();
-    var h = d.getHours();
-    var m = d.getMinutes();
-    var s = d.getSeconds();
-    var current_coords = {
-      latitude: 0, longitude: 0
-    };
-    var current_datetime = format_time_component(h) + ":" + format_time_component(m) + ":" + format_time_component(s);
-    if (position.coords.accuracy <= min_accuracy) {
-      if (prev_lat != position.coords.latitude || prev_long != position.coords.longitude) {
-        if (position.coords.speed > max_speed)
-          max_speed = position.coords.speed;
-        else if (position.coords.speed < min_speed)
-          min_speed = position.coords.speed;
-        if (position.coords.altitude > max_altitude)
-          max_altitude = position.coords.altitude;
-        else if (position.coords.altitude < min_altitude)
-          min_altitude = position.coords.altitude;
-        prev_lat = position.coords.latitude;
-        prev_long = position.coords.longitude;
-        info_string = "Current positon: lat=" + position.coords.latitude + ", long=" + position.coords.longitude + " (accuracy " + Math.round(position.coords.accuracy, 1) + "m)<br />Speed: min=" + (min_speed ? min_speed : "Not recorded/0") + "m/s, max=" + (max_speed ? max_speed : "Not recorded/0") + "m/s<br />Altitude: min=" + (min_altitude ? min_altitude : "Not recorded/0") + "m, max=" + (max_altitude ? max_altitude : "Not recorded/0") + "m (accuracy " + Math.round(position.coords.altitudeAccuracy, 1) + "m)<br />last reading taken at: " + current_datetime;
-        current_coords = position.coords;
-      }
+    var current_coords = {};
+    if (position && position.coords) {
+      current_coords = position.coords;
+    } else {
+      current_coords = DEFAULT_COORDS;
     }
-    else
-      info_string = "Accuracy not sufficient (" + Math.round(position.coords.accuracy, 1) + "m vs " + min_accuracy + "m) - last reading taken at: " + current_datetime;
-    if (info_string)
-      messageLbl.innerHTML = info_string;
-
-    document.getElementById('latitude').innerHTML = current_coords.latitude;
-    document.getElementById('longitude').innerHTML = current_coords.longitude;
+    //document.getElementById('latitude').innerHTML = current_coords.latitude;
+    //document.getElementById('longitude').innerHTML = current_coords.longitude;
 
     map_init(current_coords.latitude, current_coords.longitude);
-
-
   }
   function geo_error(error) {
     switch (error.code) {
@@ -215,10 +213,10 @@
   }
   function get_pos() {
     if (!!navigator.geolocation) {
-      wpid = navigator.geolocation.watchPosition(geo_success, geo_error, {
+      wpid = navigator.geolocation.getCurrentPosition(geo_success, geo_error, {
         enableHighAccuracy: true,
         maximumAge: 30000,
-        timeout: 27000
+        timeout: 5000
       });
     }
     else {
@@ -228,7 +226,25 @@
 
   function init() {
     messageLbl = document.getElementById('message');
-    get_pos();
+
+    $(function () {
+      $("#postcodify").postcodify({
+        insertPostcode5: "#postcode",
+        insertAddress: "#address",
+        insertDetails: "#details",
+        insertExtraInfo: "#extra_info",
+        hideOldAddresses: false
+      });
+    });
+
+    var interval = setInterval(function () {
+      if ($('.keyword')[0] && $('.search_button')[0]) {
+        clearInterval(interval);
+        $('.keyword').css('display', 'none');
+        $('.search_button').css('display', 'none');
+        get_pos();
+      }
+    }, 100);
   }
 
 </script>
