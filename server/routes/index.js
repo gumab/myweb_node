@@ -15,6 +15,13 @@ module.exports = function (app) {
     });
   });
 
+  app.get('/test', function(req,res,next){
+    res.render('views/admin/test4.html',{
+      title:'TEST page',
+      data:{user:{}}
+    });
+  });
+
   app.use('/admin', require('./page'));
 
   app.use('/admin/api', require('./api'));
