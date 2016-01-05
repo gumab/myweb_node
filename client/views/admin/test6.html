@@ -1,17 +1,30 @@
 <style>
-  .btn-custom{
-    width:100%;
-    height:70px;
-    text-align:left;
-    border-radius:0;
-    margin-bottom: -1px;
+  .btn-custom {
+    width: 100%;
+    height: 70px;
+    text-align: left;
+    margin-bottom:5px;
   }
 
-  .btn-top{
-    border-radius:10px 10px 0 0;
+  .panel-custom {
+    text-align: left;
+    height: 70px;
+    padding: 12px 12px;
+    vertical-align: middle;
+    background-color: #f4f4f4;
+    color: #444;
+    border-color: #ddd;
   }
 
-  .btn-bottom{
+  .panel-body{
+    padding:0
+  }
+
+  .btn-top {
+    border-radius: 10px 10px 0 0;
+  }
+
+  .btn-bottom {
     border-radius: 0 0 10px 10px;
   }
 </style>
@@ -35,65 +48,76 @@
   <hr/>
 
   <div class="container" style="margin-top:20px">
-    <button class="btn btn-large btn-primary btn-custom btn-top" onclick="onClick('go',1)">
+
+    <button class="btn btn-large btn-primary btn-custom" onclick="onClick('go')">
       <span style="font-weight:bold;font-size:20px"> 기본결제수단</span><br/>
       <span>SmilePay - 현대카드</span><br/>
     </button>
 
-    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="false">
-      <div>
-        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse1" aria-expanded="true"
-           aria-controls="collapse1">
-          <button class="btn btn-large btn-default btn-custom" role="tab" id="heading1">
-            <img src="/assets/img/smilepay.png" width="100%">
-          </button>
+    <div id="default">
+    <button class="btn btn-large btn-default btn-custom" onclick="onClick('another')">
+      <span style="font-weight:bold;font-size:20px"> 다른 결제수단 선택</span><br/>
+      <span></span><br/>
+    </button>
+    </div>
+
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true" style="display:none">
+      <div class="panel panel-default">
+        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true"
+           aria-controls="collapseOne">
+          <div class="panel-heading panel-custom" role="tab" id="headingOne">
+            <img src="/assets/img/smilepay.png" height="42px">
+          </div>
         </a>
-        <div id="collapse1" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading1">
-          <div class="panel-body" style="padding:0">
+
+        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
             <img src="/assets/img/smilepays.png" width="100%">
           </div>
         </div>
       </div>
-      <div>
-        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true"
-           aria-controls="collapseOne">
-          <button class="btn btn-large btn-default btn-custom" role="tab" id="headingOne">
+      <div class="panel panel-default">
+        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"
+           aria-expanded="false" aria-controls="collapseTwo">
+          <div class="panel-heading panel-custom" role="tab" id="headingTwo">
             <span style="font-weight:bold;font-size:20px;color:black"> 신용/체크카드</span><br/>
-            <span></span><br/>
-          </button>
+          </div>
         </a>
-        <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-          <div class="panel-body" style="padding:0">
+
+        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
             <img src="/assets/img/cards.png" width="100%">
           </div>
         </div>
       </div>
-
-      <div>
-        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true"
-           aria-controls="collapseTwo">
-          <button class="btn btn-large btn-default btn-custom" role="tab" id="headingTwo">
-            <span style="font-weight:bold;font-size:20px;color:black"> 현금</span><br/>
-            <span></span><br/>
-          </button>
+      <div class="panel panel-default">
+        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree"
+           aria-expanded="false" aria-controls="collapseThree">
+          <div class="panel-heading panel-custom" role="tab" id="headingThree">
+            <h4 class="panel-title">
+              <span style="font-weight:bold;font-size:20px;color:black"> 현금</span><br/>
+            </h4>
+          </div>
         </a>
-        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-          <div class="panel-body" style="padding:0">
+
+        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
             <img src="/assets/img/banks.png" width="100%">
           </div>
         </div>
       </div>
-
-      <div>
-        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse3" aria-expanded="true"
-           aria-controls="collapse3">
-          <button class="btn btn-large btn-default btn-custom btn-bottom" role="tab" id="heading3">
-            <span style="font-weight:bold;font-size:20px;color:black"> 휴대폰 소액결제</span><br/>
-            <span></span><br/>
-          </button>
+      <div class="panel panel-default">
+        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour"
+           aria-expanded="false" aria-controls="collapseFour">
+          <div class="panel-heading panel-custom" role="tab" id="headingFour">
+            <h4 class="panel-title">
+              <span style="font-weight:bold;font-size:20px;color:black"> 휴대폰 소액결제</span><br/>
+            </h4>
+          </div>
         </a>
-        <div id="collapse3" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading3">
-          <div class="panel-body" style="padding:0">
+
+        <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+          <div class="panel-body">
             <img src="/assets/img/phone.png" width="100%">
           </div>
         </div>
@@ -111,14 +135,14 @@
   var address = myWeb.data.addrInfo;
   init();
   function init() {
-    document.getElementById('addr').innerHTML = '<span style="font-weight:bold;color:darkred">['+address.postcode+']</span><br/>' +
-      '<span>'+address.address+' '+address.extra_info+'</span>';
+    document.getElementById('addr').innerHTML = '<span style="font-weight:bold;color:darkred">[' + address.postcode + ']</span><br/>' +
+      '<span>' + address.address + ' ' + address.extra_info + '</span>';
     $('#postcode').val(address.postcode);
     $('#address').val(address.address);
     $('#extra_info').val(address.extra_info);
   }
 
-  function onSubmit(){
+  function onSubmit() {
     var details = $('#details').val();
     var name = $('#ship_name').val();
     var result = false;
@@ -130,6 +154,20 @@
       result = confirm('받는사람: ' + name + '\n주소: ' + address.address + ' ' + details + ' 로 배송하시겠습니까?')
     }
     return result;
+  }
+
+  function onClick(target){
+    switch(target){
+      case 'go':{
+        location.href='/test6_1';
+        break;
+      }
+      case 'another':{
+        $('#default').css('display','none');
+        $('#accordion').css('display','');
+        break;
+      }
+    }
   }
 
 </script>

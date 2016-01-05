@@ -1,0 +1,76 @@
+<style>
+  .btn-custom {
+    width: 100%;
+    height: 70px;
+    text-align: left;
+    margin-bottom:5px;
+  }
+
+  .panel-custom {
+    text-align: left;
+    height: 70px;
+    padding: 12px 12px;
+    vertical-align: middle;
+    background-color: #f4f4f4;
+    color: #444;
+    border-color: #ddd;
+  }
+
+  .panel-body{
+    padding:0
+  }
+
+  .btn-top {
+    border-radius: 10px 10px 0 0;
+  }
+
+  .btn-bottom {
+    border-radius: 0 0 10px 10px;
+  }
+</style>
+<link rel="stylesheet" href="http://script.gmarket.co.kr/mobile/css/cart.css"/>
+
+<div style="text-align: center;">
+  <a href="/test7"> <img src="/assets/img/payment.png" width="100%"></a>
+</div>
+
+<%-contentFor('script')%>
+
+<script src="//cdn.poesis.kr/post/search.min.js"></script>
+
+<script>
+
+  var address = myWeb.data.addrInfo;
+  init();
+  function init() {
+    document.getElementById('addr').innerHTML = '<span style="font-weight:bold;color:darkred">[' + address.postcode + ']</span><br/>' +
+      '<span>' + address.address + ' ' + address.extra_info + '</span>';
+    $('#postcode').val(address.postcode);
+    $('#address').val(address.address);
+    $('#extra_info').val(address.extra_info);
+  }
+
+  function onSubmit() {
+    var details = $('#details').val();
+    var name = $('#ship_name').val();
+    var result = false;
+    if (!details) {
+      alert('상세주소를 입력해주세요');
+    } else if (!name) {
+      alert('받는사람 이름을 입력해주세요');
+    } else {
+      result = confirm('받는사람: ' + name + '\n주소: ' + address.address + ' ' + details + ' 로 배송하시겠습니까?')
+    }
+    return result;
+  }
+
+  function onClick(target){
+    switch(target){
+      case 'another':{
+        $('#default').css('display','none');
+        $('#accordion').css('display','');
+      }
+    }
+  }
+
+</script>

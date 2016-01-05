@@ -85,6 +85,34 @@ module.exports = function (app) {
     });
   });
 
+  app.get('/test6_1', function (req, res, next) {
+    var addr = {
+      postcode: req.query.postcode,
+      address: req.query.address,
+      details: req.query.details,
+      extra_info: req.query.extra_info,
+      ship_name: req.query.ship_name
+    };
+    res.render('views/admin/test6_1.html', {
+      title: 'TEST page',
+      data: { user: {}, addrInfo: addr || '' }
+    });
+  });
+
+  app.get('/test7', function (req, res, next) {
+    var addr = {
+      postcode: req.query.postcode,
+      address: req.query.address,
+      details: req.query.details,
+      extra_info: req.query.extra_info,
+      ship_name: req.query.ship_name
+    };
+    res.render('views/admin/test7.html', {
+      title: 'TEST page',
+      data: { user: {}, addrInfo: addr || '' }
+    });
+  });
+
   app.use('/admin', require('./page'));
 
   app.use('/admin/api', require('./api'));

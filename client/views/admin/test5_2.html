@@ -1,4 +1,11 @@
 <style>
+  .btn-custom {
+    width: 100%;
+    height: 70px;
+    margin-bottom:5px;
+    font-weight:bold;
+    font-size:20px;
+  }
 </style>
 
 
@@ -28,14 +35,14 @@
         <input class="form-control" type="hidden" name="address" id="address" value=""/><br/>
         <input class="form-control" type="hidden" name="extra_info" id="extra_info" value=""/><br/>
       </div>
-      <input class="form-control" type="text" name="details" id="details"/>
+      <input class="form-control" type="text" name="details" id="details" placeholder="상세주소 입력"/>
       <hr/>
       <div class="input-group">
         <span class="input-group-addon">받는사람 이름</span>
-        <input class="form-control" type="text" name="name" id="name"/>
+        <input class="form-control" type="text" name="name" id="name" placeholder="홍길동"/>
       </div>
-      <div id="btnDiv" style="text-align:center;margin-top:10px">
-        <button class="btn btn-large btn-primary" style="font-weight:bold">확인</button>
+      <div id="btnDiv" style="text-align:center;margin-top:30px">
+        <button class="btn btn-large btn-primary btn-custom">확인</button>
       </div>
     </form>
   </div>
