@@ -5,32 +5,33 @@
     border-radius:20px;
     margin:5px;
   }
-
-  .btn-left{
-    border-radius:20px 0 0 20px;
+  .col-left{
+    text-align:left;
   }
 
-  .btn-right{
-    border-radius: 0 20px 20px 0;
+  .col-right{
+    text-align:right;
   }
+
 </style>
 
 
 <div style="text-align: center; margin-top:10px">
 
   <div>
-    <div class="col-xs-4">
+    <div class="col-xs-4 col-left">
       <a onclick="history.back()"><span style="font-size:20px" class="glyphicon glyphicon-chevron-left"></span></a>
     </div>
     <div class="col-xs-4">
     </div>
-    <div class="col-xs-4">
+    <div class="col-xs-4 col-right">
       <a><span style="font-size:20px" class="glyphicon glyphicon-question-sign"></span></a>
     </div>
   </div>
   <div>
     <h2 style=" font-family:'맑은고딕'">배송지 선택</h2>
   </div>
+  <hr/>
   <div style="margin-top:40px">
     <button class="btn btn-large btn-default btn-custom" onclick="onClick('geo')">
       <span style="font-size:50px" class="glyphicon glyphicon-map-marker"></span>
