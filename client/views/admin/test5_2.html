@@ -1,0 +1,74 @@
+<style>
+</style>
+
+
+<div style="text-align: center; margin-top:10px">
+
+  <div>
+    <div class="col-xs-4">
+      <a onclick="history.back()"><span style="font-size:20px" class="glyphicon glyphicon-chevron-left"></span></a>
+    </div>
+    <div class="col-xs-4">
+    </div>
+    <div class="col-xs-4">
+      <a><span style="font-size:20px" class="glyphicon glyphicon-question-sign"></span></a>
+    </div>
+  </div>
+  <div>
+    <h2 style=" font-family:'맑은고딕'">배송지 선택</h2>
+    <h6 id="comment">상세주소를 입력해주세요</h6>
+  </div>
+  <hr/>
+
+  <div class="container" style="text-align: left">
+    <div id="addr"></div>
+    <form action="/test6" onsubmit="return onSubmit()">
+      <div style="display:none">
+        <input class="form-control" type="hidden" name="postcode" id="postcode" value="" /><br/>
+        <input class="form-control" type="hidden" name="address" id="address" value=""/><br/>
+        <input class="form-control" type="hidden" name="extra_info" id="extra_info" value=""/><br/>
+      </div>
+      <input class="form-control" type="text" name="details" id="details"/>
+      <hr/>
+      <div class="input-group">
+        <span class="input-group-addon">받는사람 이름</span>
+        <input class="form-control" type="text" name="name" id="name"/>
+      </div>
+      <div id="btnDiv" style="text-align:center;margin-top:10px">
+        <button class="btn btn-large btn-primary" style="font-weight:bold">확인</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<%-contentFor('script')%>
+
+<script src="//cdn.poesis.kr/post/search.min.js"></script>
+
+<script>
+
+  var address = myWeb.data.addrInfo;
+  init();
+  function init() {
+    document.getElementById('addr').innerHTML = '<span style="font-weight:bold;color:darkred">['+address.postcode+']</span><br/>' +
+      '<span>'+address.address+' '+address.extra_info+'</span>';
+    $('#postcode').val(address.postcode);
+    $('#address').val(address.address);
+    $('#extra_info').val(address.extra_info);
+  }
+
+  function onSubmit(){
+    var details = $('#details').val();
+    var name = $('#name').val();
+    var result = false;
+    if (!details) {
+      alert('상세주소를 입력해주세요');
+    } else if (!name) {
+      alert('받는사람 이름을 입력해주세요');
+    } else {
+      result = confirm('받는사람: ' + name + '\n주소: ' + address.address + ' ' + details + ' 로 배송하시겠습니까?')
+    }
+    return result;
+  }
+
+</script>

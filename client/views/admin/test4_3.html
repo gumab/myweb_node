@@ -37,7 +37,7 @@
       <br/>
       <span>현재위치로 검색</span>
     </button>
-    <button class="btn btn-large btn-default btn-custom">
+    <button class="btn btn-large btn-default btn-custom" onclick="onClick('search')">
       <span style="font-size:50px" class="glyphicon glyphicon-zoom-in"></span>
       <br/>
       <span>직접 입력하여 검색</span>
@@ -53,6 +53,10 @@
     switch(target){
       case 'geo':{
         location.href='/test5';
+        break;
+      }
+      case 'search':{
+        location.href='/test5_1';
         break;
       }
       case 'history':{

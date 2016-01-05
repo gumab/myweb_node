@@ -16,17 +16,15 @@
   </div>
   <div>
     <h2 style=" font-family:'맑은고딕'">배송지 선택</h2>
-    <h6>우편번호를 확인해주세요</h6>
+    <h6 id="comment">우편번호를 확인해주세요</h6>
   </div>
 
-  <hr/>
-
-  <form style="display:none">
+  <form id="postcode_form" style="display: none;" action="/test5_2" method="get">
     <!-- 주소와 우편번호를 입력할 <input>들을 생성하고 적당한 name과 id를 부여한다 -->
-    <input class="form-control" type="text" name="" id="postcode" value=""/><br/>
-    <input class="form-control" type="text" name="" id="address" value=""/><br/>
-    <input class="form-control" type="text" name="" id="details" value=""/><br/>
-    <input class="form-control" type="text" name="" id="extra_info" value=""/><br/>
+    <input class="form-control" type="text" name="postcode" id="postcode" value="" /><br/>
+    <input class="form-control" type="text" name="address" id="address" value=""/><br/>
+    <input class="form-control" type="text" name="details" id="details" value=""/><br/>
+    <input class="form-control" type="text" name="extra_info" id="extra_info" value=""/><br/>
   </form>
 
   <hr/>
@@ -41,9 +39,7 @@
 
 <script>
 
-  var addrName = myWeb.data.addr;
-
-init();
+  init();
   function init() {
     $(function () {
       $("#postcodify").postcodify({
@@ -55,16 +51,52 @@ init();
       });
     });
 
-    var interval = setInterval(function () {
-      if ($('.keyword')[0] && $('.search_button')[0]) {
-        clearInterval(interval);
-        $('.keyword').css('display', 'none');
-        $('.search_button').css('display', 'none');
+    if(myWeb.data.addr) {
+      var interval = setInterval(function () {
+        if ($('.keyword')[0] && $('.search_button')[0]) {
+          clearInterval(interval);
+          $('.keyword').css('display', 'none');
+          $('.search_button').css('display', 'none');
 
-        $('.keyword').val(addrName);
-        $('.search_button').click();
+          $('.keyword').val(myWeb.data.addr);
+          $('.search_button').click();
+        }
+      }, 100);
+    }else{
+      document.getElementById('comment').innerHTML='동/읍/면 혹은 도로명주소로 검색해주세요'
+    }
+
+
+    var interval2 = setInterval(function(){
+      if(isPostCodeChanged()){
+        //alert(postcode);
+        document.getElementById('postcode_form').submit();
       }
-    }, 100);
+    });
+
+  }
+
+  var postcode = $('#postcode').val();
+  var address = $('#address').val();
+  var details = $('#details').val();
+  var extra_info = $('#extra_info').val();
+
+  function isPostCodeChanged() {
+    var new_postcode = $('#postcode').val();
+    var new_address = $('#address').val();
+    var new_details = $('#details').val();
+    var new_extra_info = $('#extra_info').val();
+    var result = postcode !== new_postcode ||
+      address !== new_address || details !== new_details || extra_info !== new_extra_info;
+    postcode = new_postcode;
+    address = new_address;
+    details = new_details;
+    extra_info = new_extra_info;
+    return result;
+  }
+
+  function onChange(){
+    alert('hello');
   }
 
 </script>
