@@ -1,10 +1,10 @@
 <style>
-  .col-left{
-    text-align:left;
+  .col-left {
+    text-align: left;
   }
 
-  .col-right{
-    text-align:right;
+  .col-right {
+    text-align: right;
   }
 
   .map_wrap {
@@ -21,9 +21,9 @@
   .btn-custom {
     width: 100%;
     height: 70px;
-    margin-bottom:5px;
-    font-weight:bold;
-    font-size:20px;
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 20px;
   }
 
   .hAddr {
@@ -50,11 +50,42 @@
     white-space: nowrap;
   }
 
-  .custom_zoomcontrol {position:absolute;top:120px;right:20px;width:36px;height:70px;overflow:hidden;z-index:1;background-color:#f5f5f5;}
-  .custom_zoomcontrol span {display:block;width:36px;height:35px;text-align:center;cursor:pointer;}
-  .custom_zoomcontrol span img {width:15px;height:15px;padding:12px 0;border:none; z-index:2}
-  .custom_zoomcontrol span:first-child{border-bottom:1px solid #bfbfbf;}
-  .radius_border{border:1px solid #919191;border-radius:5px;}
+  .custom_zoomcontrol {
+    position: absolute;
+    top: 120px;
+    right: 20px;
+    width: 36px;
+    height: 70px;
+    overflow: hidden;
+    z-index: 1;
+    background-color: #f5f5f5;
+  }
+
+  .custom_zoomcontrol span {
+    display: block;
+    width: 36px;
+    height: 35px;
+    text-align: center;
+    cursor: pointer;
+  }
+
+  .custom_zoomcontrol span img {
+    width: 15px;
+    height: 15px;
+    margin: 8px;
+    margin-right: 10px;
+    padding: 0;
+    border: none
+  }
+
+  .custom_zoomcontrol span:first-child {
+    border-bottom: 1px solid #bfbfbf;
+  }
+
+  .radius_border {
+    border: 1px solid #919191;
+    border-radius: 5px;
+  }
 </style>
 
 
@@ -90,9 +121,11 @@
   </div>
 
   <!-- 지도 확대, 축소 컨트롤 div 입니다 -->
-  <div class="custom_zoomcontrol radius_border">
-    <span onclick="map.setLevel(map.getLevel() - 1)"><img src="http://i1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_plus.png" alt="확대"></span>
-    <span onclick="map.setLevel(map.getLevel() + 1)"><img src="http://i1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_minus.png" alt="축소"></span>
+  <div id="custom_zoom" class="custom_zoomcontrol radius_border" style="display:none">
+    <span onclick="map.setLevel(map.getLevel() - 1)"><img
+      src="http://i1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_plus.png" alt="확대"></span>
+    <span onclick="map.setLevel(map.getLevel() + 1)"><img
+      src="http://i1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_minus.png" alt="축소"></span>
   </div>
 
   <h3 style="display: none;" id="message"></h3>
@@ -118,11 +151,12 @@
 
 <script>
 
-  var geocoder, marker, map, infowindow, currentAddr;
+  var geocoder, marker, map, infowindow, currentAddr, zoomLevel = 2;
   var wpid;
   var DEFAULT_COORDS = {
     latitude: 37.566826,
-    longitude: 126.9786567
+    longitude: 126.9786567,
+    accuracy: 2000
   };
 
   function map_init(lat, lng) {
@@ -140,7 +174,7 @@
     var mapContainer = document.getElementById('map'), // 지도를 표시할 div
       mapOption = {
         center: new daum.maps.LatLng(latitude, longitude), // 지도의 중심좌표
-        level: 2 // 지도의 확대 레벨
+        level: zoomLevel // 지도의 확대 레벨
       };
 
     // 지도를 생성합니다
@@ -194,9 +228,10 @@
         //        infowindow.open(map, marker);
 
         document.getElementById('addrDetail').innerHTML = content;
-        currentAddr = !!result[0].roadAddress.name?result[0].roadAddress.name:result[0].jibunAddress.name;
+        currentAddr = !!result[0].roadAddress.name ? result[0].roadAddress.name : result[0].jibunAddress.name;
         $('#loading').css('display', 'none');
         $('#btnDiv').css('display', '');
+        $('#custom_zoom').css('display','');
       }
     }
   }
@@ -239,8 +274,18 @@
     //document.getElementById('latitude').innerHTML = current_coords.latitude;
     //document.getElementById('longitude').innerHTML = current_coords.longitude;
 
-    document.getElementById('test1').innerText = JSON.stringify(current_coords.accuracy);
-    console.log(current_coords);
+    //document.getElementById('test1').innerText = JSON.stringify(current_coords.accuracy);
+    //console.log(current_coords);
+    var accuracy = current_coords.accuracy;
+    if (accuracy <= 100) {
+      zoomLevel = 2;
+    } else if (accuracy <= 500) {
+      zoomLevel = 3;
+    } else if (accuracy <= 1000) {
+      zoomLevel = 4;
+    } else {
+      zoomLevel = 5;
+    }
 
     map_init(current_coords.latitude, current_coords.longitude);
   }
@@ -269,10 +314,10 @@
     get_pos();
   }
 
-  function goNext(){
-    if(currentAddr){
-      location.href='/test5_1?addr='+currentAddr;
-    }else{
+  function goNext() {
+    if (currentAddr) {
+      location.href = '/test5_1?addr=' + currentAddr;
+    } else {
       alert('위치를 확인해주세요');
     }
   }
