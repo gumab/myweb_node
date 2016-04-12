@@ -14,7 +14,7 @@ module.exports = {
       if (err) {
         callback(err);
       } else {
-        callback(null, user);
+        callback(null, 'success');
       }
     });
   }
