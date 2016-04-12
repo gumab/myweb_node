@@ -15,6 +15,19 @@ module.exports = function (app) {
     });
   });
 
+  app.get('/upLoc', function (req,res,next){
+    var locService = require('../services/locService');
+    var lat = req.query.lat;
+    var lng = req.query.lng;
+    locService.updateLocation(lat, lng, function (err,data){
+      if(err){
+        res.status(500).send({message:'error!!', error:err})
+      } else {
+        res.send({message:'success'})
+      }
+    })
+  })
+
   app.get('/test', function (req, res, next) {
     res.render('views/admin/test4_1.html', {
       title: 'TEST page',

@@ -7,7 +7,7 @@ module.exports = {
   root: rootPath,
   webServer: {
     ip: '127.0.0.1',
-    port: '1111'
+    port: '11111'
   },
   cryptoKey: 'MyNameIsGUMA!@#10102020',
   imageFolder: path.normalize(rootPath + '/../uploaded'),
